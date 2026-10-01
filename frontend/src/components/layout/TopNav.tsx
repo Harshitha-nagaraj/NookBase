@@ -46,7 +46,6 @@ export const TopNav: React.FC<TopNavProps> = ({ apiStatus }) => {
           <span className="font-mono text-[#F1EDE4] font-semibold uppercase text-[10px]">
             {apiStatus === 'connected' ? 'Connected' : apiStatus === 'checking' ? 'Connecting...' : 'Offline'}
           </span>
-          <span className="text-[#77746C] font-mono hidden md:inline border-l border-[#34342D] pl-2 text-[10px]">127.0.0.1:8000</span>
         </div>
       </div>
     </header>

@@ -4,63 +4,76 @@
 
 @layer base {
   body {
-    @apply text-zinc-900 antialiased font-sans selection:bg-[#00288e]/10 selection:text-[#00288e];
-    background-color: #fafaf4;
+    @apply text-slate-900 antialiased font-sans selection:bg-[#00288e]/10 selection:text-[#00288e];
+    background-color: #f8fafc;
   }
 
-  /* Custom subtle scrollbars */
+  /* Custom subtle developer scrollbars */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #fafaf4;
+    background: #f8fafc;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d4d4d8;
-    border-radius: 2px;
+    background: #cbd5e1;
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1aa;
+    background: #94a3b8;
   }
 }
 
 @layer components {
-  /* Developer unboxed section */
-  .stitch-section {
-    @apply bg-white border border-zinc-200 rounded-sm p-4 transition-all;
+  /* Developer unboxed/bordered section card */
+  .dev-card {
+    @apply bg-white border border-slate-200 rounded-[6px] p-4 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)];
   }
 
   /* Developer table styling */
-  .stitch-table {
+  .dev-table {
     @apply w-full text-left text-xs font-sans border-collapse;
   }
-  .stitch-table th {
-    @apply bg-zinc-100/80 px-3 py-2 font-mono text-[11px] font-semibold text-zinc-600 uppercase border-b border-zinc-200 tracking-wider;
+  .dev-table th {
+    @apply bg-slate-100/90 px-3.5 py-2.5 font-mono text-[11px] font-semibold text-slate-600 uppercase border-b border-slate-200 tracking-wider select-none;
   }
-  .stitch-table td {
-    @apply px-3 py-2 border-b border-zinc-100 text-zinc-800 text-xs transition-colors duration-150;
+  .dev-table td {
+    @apply px-3.5 py-2.5 border-b border-slate-100 text-slate-800 text-xs transition-colors duration-150;
   }
-  .stitch-table tr:hover td {
-    background-color: #f4f4f5;
+  .dev-table tr:hover td {
+    background-color: #f1f5f9;
   }
-  .stitch-table tr:last-child td {
+  .dev-table tr:last-child td {
     @apply border-b-0;
+  }
+
+  /* Legacy alias for backwards compatibility */
+  .stitch-section {
+    @apply dev-card;
+  }
+  .stitch-table {
+    @apply dev-table;
   }
 
   /* Primary Deep Blue Button */
   .btn-primary {
-    @apply bg-[#00288e] hover:bg-[#1e40af] active:bg-[#001d6e] text-white rounded-[4px] px-3 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shadow-none;
+    @apply bg-[#00288e] hover:bg-[#1e40af] active:bg-[#001d6e] text-white rounded-[6px] px-3.5 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm;
   }
 
   /* Secondary Neutral Button */
   .btn-secondary {
-    @apply bg-white hover:bg-zinc-50 border border-zinc-300 text-zinc-700 rounded-[4px] px-3 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-[6px] px-3.5 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm;
+  }
+
+  /* Outline Action Button */
+  .btn-outline {
+    @apply bg-transparent hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5;
   }
 
   /* Compact Status Badges */
   .badge-status {
-    @apply px-2 py-0.5 rounded-[3px] text-[11px] font-mono font-medium border inline-flex items-center gap-1;
+    @apply px-2 py-0.5 rounded-[4px] text-[11px] font-mono font-semibold border inline-flex items-center gap-1 leading-none;
   }
   .badge-good {
     @apply bg-emerald-50 text-emerald-800 border-emerald-200;
@@ -69,16 +82,17 @@
     @apply bg-amber-50 text-amber-800 border-amber-200;
   }
   .badge-danger {
-    @apply bg-red-50 text-red-800 border-red-200;
+    @apply bg-rose-50 text-rose-800 border-rose-200;
   }
   .badge-info {
-    @apply bg-blue-50 text-blue-800 border-blue-200;
+    @apply bg-sky-50 text-sky-800 border-sky-200;
   }
   .badge-neutral {
-    @apply bg-zinc-100 text-zinc-700 border-zinc-200;
+    @apply bg-slate-100 text-slate-700 border-slate-200;
+  }
+
+  /* Developer input styles */
+  .dev-input {
+    @apply bg-white border border-slate-300 rounded-[6px] px-3 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#00288e] focus:ring-1 focus:ring-[#00288e] transition-colors font-mono;
   }
 }
-
-
-
-

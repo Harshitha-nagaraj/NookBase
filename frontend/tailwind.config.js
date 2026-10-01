@@ -8,24 +8,24 @@ export default {
     extend: {
       colors: {
         stitch: {
-          bg: '#fafaf4',
-          sidebar: '#f5f5f0',
+          bg: '#f8fafc',
+          sidebar: '#f1f5f9',
           surface: '#ffffff',
-          border: '#e4e4e7',
-          'border-subtle': '#f4f4f5',
+          border: '#e2e8f0',
+          'border-subtle': '#f1f5f9',
           primary: '#00288e',
           'primary-hover': '#1e40af',
           'primary-light': '#eff6ff',
-          text: '#18181b',
-          muted: '#71717a',
-          dim: '#a1a1aa',
-          good: '#166534',
+          text: '#0f172a',
+          muted: '#64748b',
+          dim: '#94a3b8',
+          good: '#15803d',
           'good-bg': '#f0fdf4',
           'good-border': '#bbf7d0',
-          warn: '#9a3412',
+          warn: '#c2410c',
           'warn-bg': '#fff7ed',
           'warn-border': '#fed7aa',
-          danger: '#991b1b',
+          danger: '#b91c1c',
           'danger-bg': '#fef2f2',
           'danger-border': '#fecaca',
         }
@@ -33,10 +33,11 @@ export default {
       fontFamily: {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      borderRadius: {
+        'dev': '6px',
       }
     },
   },
   plugins: [],
 }
-
-

@@ -1,7 +1,8 @@
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+*.pyo
+*.pyd
 *.so
 .Python
 env/
@@ -21,13 +22,18 @@ frontend/build/
 
 # Local Database & Storage Artifacts
 data/chromadb/
+data/*.db
 data/run_history.db
 scratch/
 
 # Environment variables & secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+# Logs & Temporary Files
+*.log
+logs/
 
 # IDEs & OS
 .idea/

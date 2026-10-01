@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCw, Settings, User, Activity } from 'lucide-react';
+import { RefreshCw, Activity, AlertCircle } from 'lucide-react';
 import type { NavTab } from './Sidebar';
 
 interface TopBarProps {
@@ -17,80 +17,99 @@ export const TopBar: React.FC<TopBarProps> = ({
   apiStatus,
   onRefresh,
 }) => {
-  const getTabBreadcrumb = (tab: NavTab) => {
+  const getHeaderMeta = (tab: NavTab) => {
     switch (tab) {
       case 'analyze':
-        return 'Workbench';
+        return {
+          title: 'Analyze',
+          description: 'Inspect retrieval, grounding, context, and pipeline behavior',
+        };
+      case 'history':
+        return {
+          title: 'Run History',
+          description: 'Audit log of past RAG queries, grounding diagnostic traces, and telemetry',
+        };
       case 'documents':
-        return 'Documents';
+        return {
+          title: 'Documents',
+          description: 'Indexed knowledge base corpus and vector chunk store',
+        };
       case 'evaluation':
-        return 'Evaluation';
+        return {
+          title: 'Evaluation',
+          description: 'System Quality Benchmarks, precision@k, recall@k, and hallucination scoring',
+        };
       case 'experiments':
-        return 'Experiments';
+        return {
+          title: 'Experiments',
+          description: 'Engineering context optimization trade-offs and pipeline comparisons',
+        };
       case 'security':
-        return 'Security';
+        return {
+          title: 'Security',
+          description: 'Prompt injection scanner, jailbreak detection, and chunk safety console',
+        };
       default:
-        return 'Workbench';
+        return {
+          title: 'Analyze',
+          description: 'Inspect retrieval, grounding, context, and pipeline behavior',
+        };
     }
   };
 
+  const meta = getHeaderMeta(activeTab);
+
   return (
-    <header className="ml-[240px] fixed top-0 right-0 left-0 h-12 bg-white/95 backdrop-blur-sm border-b border-zinc-200 px-6 flex items-center justify-between z-10 font-sans">
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center gap-2 text-xs">
-        <span className="text-zinc-500 font-medium">RAG Debugger</span>
-        <span className="text-zinc-300">/</span>
-        <span className="text-zinc-900 font-semibold">{getTabBreadcrumb(activeTab)}</span>
+    <header className="ml-[240px] fixed top-0 right-0 left-0 h-13 bg-white border-b border-slate-200 px-6 flex items-center justify-between z-10 font-sans shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+      {/* Title and Contextual Description */}
+      <div className="flex items-center gap-3">
+        <h1 className="text-sm font-bold text-slate-900 tracking-tight">{meta.title}</h1>
+        <span className="text-slate-300">|</span>
+        <span className="text-xs text-slate-500 font-normal hidden sm:inline">{meta.description}</span>
       </div>
 
-      {/* Right Tools & Metadata */}
-      <div className="flex items-center gap-4 text-xs font-mono text-zinc-600">
-        {/* Run Metadata */}
-        <div className="flex items-center gap-3 border-r border-zinc-200 pr-4">
-          <span className="px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-700 text-[11px] font-semibold">
+      {/* Connection & Telemetry Status & Refresh */}
+      <div className="flex items-center gap-4 text-xs font-mono text-slate-600">
+        {/* Run ID & Telemetry */}
+        <div className="hidden md:flex items-center gap-3 border-r border-slate-200 pr-4">
+          <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-semibold">
             {runId}
           </span>
-          <div className="flex items-center gap-1 text-zinc-500 text-[11px]">
-            <Activity className="w-3 h-3 text-[#00288e]" />
+          <div className="flex items-center gap-1.5 text-slate-600 text-[11px]">
+            <Activity className="w-3.5 h-3.5 text-[#00288e]" />
             <span>{latencyMs.toFixed(1)} ms</span>
           </div>
         </div>
 
         {/* Connection Status Indicator */}
-        <div className="flex items-center gap-1.5 border-r border-zinc-200 pr-4">
-          <span
-            className={`w-2 h-2 rounded-full ${
-              apiStatus === 'connected' ? 'bg-emerald-500' : 'bg-amber-500 animate-ping'
-            }`}
-          />
-          <span className="text-[11px] text-zinc-700">
-            {apiStatus === 'connected' ? 'Connected' : 'Connecting...'}
-          </span>
+        <div className="flex items-center gap-1.5 border-r border-slate-200 pr-4">
+          {apiStatus === 'connected' ? (
+            <>
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="text-[11px] font-medium text-slate-700">Connected</span>
+            </>
+          ) : apiStatus === 'checking' ? (
+            <>
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+              <span className="text-[11px] font-medium text-amber-700">Checking...</span>
+            </>
+          ) : (
+            <>
+              <AlertCircle className="w-3.5 h-3.5 text-rose-500" />
+              <span className="text-[11px] font-medium text-rose-700">Offline</span>
+            </>
+          )}
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={onRefresh}
-            title="Refresh active view"
-            className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded transition-colors flex items-center gap-1 text-[11px] font-sans"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>Refresh</span>
-          </button>
-
-          <button
-            title="Settings"
-            className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded transition-colors"
-          >
-            <Settings className="w-3.5 h-3.5" />
-          </button>
-
-          {/* User Icon Avatar */}
-          <div className="w-6 h-6 rounded-full bg-[#00288e] text-white flex items-center justify-center font-bold text-[10px] ml-1">
-            <User className="w-3.5 h-3.5" />
-          </div>
-        </div>
+        {/* Refresh Action */}
+        <button
+          onClick={onRefresh}
+          title="Refresh connection & active view"
+          className="px-2.5 py-1 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded border border-slate-200 transition-colors flex items-center gap-1.5 text-[11px] font-sans font-medium"
+        >
+          <RefreshCw className="w-3 h-3 text-slate-500" />
+          <span>Refresh</span>
+        </button>
       </div>
     </header>
   );
