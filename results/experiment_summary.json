@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-09-23 12:35:53",
+  "retrieval_metrics": {
+    "dataset_size": 10,
+    "precision_at_1": 0.7,
+    "precision_at_3": 0.4667,
+    "precision_at_5": 0.28,
+    "recall_at_1": 0.35,
+    "recall_at_3": 0.7,
+    "recall_at_5": 0.7
+  },
+  "grounding_metrics": {
+    "grounded_percentage": 10.0,
+    "partially_grounded_percentage": 10.0,
+    "unsupported_percentage": 0.0,
+    "no_answer_percentage": 80.0,
+    "answer_relevance": 0.7087
+  },
+  "efficiency_metrics": {
+    "average_input_tokens": 200.8,
+    "average_output_tokens": 14.4,
+    "average_total_tokens": 215.2,
+    "average_retrieval_latency_ms": 19.41,
+    "average_generation_latency_ms": 0.02,
+    "average_total_latency_ms": 35.43
+  },
+  "basic_rag": {
+    "precision_at_1": 0.7,
+    "recall_at_5": 0.7,
+    "grounded_percentage": 10.0,
+    "answer_relevance": 0.7087,
+    "average_input_tokens": 200.8,
+    "average_total_tokens": 215.2,
+    "average_total_latency_ms": 40.98
+  },
+  "optimized_rag": {
+    "precision_at_1": 0.7,
+    "recall_at_5": 0.45,
+    "grounded_percentage": 10.0,
+    "answer_relevance": 0.7087,
+    "average_input_tokens": 124.3,
+    "average_total_tokens": 138.7,
+    "average_total_latency_ms": 32.14
+  },
+  "optimization_tradeoff": {
+    "average_chunks_removed": 1.0,
+    "context_reduction_percentage": 36.3,
+    "recall_at_5_difference": -0.25,
+    "token_reduction_percentage": 38.1,
+    "latency_reduction_ms": 8.84,
+    "explanation": "Context optimization filtered out low-relevance chunks using L2 distance thresholding, reducing context token count by ~38.1% (from 200.8 to 124.3 tokens) and overall latency by ~5.09 ms. However, filtering reduced Recall@5 from 0.7000 to 0.4500 because some relevant context resided in secondary chunks that fell below the strict distance threshold."
+  },
+  "security_validation": {
+    "detector_type": "Deterministic Regex Pattern Matcher",
+    "test_cases_analyzed": 4,
+    "benign_cases": 1,
+    "suspicious_cases": 3,
+    "high_risk_detections": 3,
+    "medium_risk_detections": 0,
+    "low_risk_cases": 1,
+    "deterministic": true
+  },
+  "test_suite": {
+    "total_pytest_cases": 37,
+    "pytest_status": "PASSED"
+  },
+  "frontend_build": {
+    "framework": "React + Vite + TypeScript",
+    "build_status": "SUCCESS",
+    "type_errors": 0
+  }
+}

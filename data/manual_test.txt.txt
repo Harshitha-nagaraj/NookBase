@@ -1,0 +1,1 @@
+RAG combines retrieval with generation. Retrieved documents provide external context to the language model. This can help answer questions using information from a knowledge base.

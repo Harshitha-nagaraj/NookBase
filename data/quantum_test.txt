@@ -1,0 +1,1 @@
+Quantum computing relies on qubits to perform computations in superposition. Entanglement enables faster processing of complex state spaces.

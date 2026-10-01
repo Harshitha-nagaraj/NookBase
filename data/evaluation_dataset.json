@@ -1,0 +1,402 @@
+[
+  {
+    "id": "q001",
+    "question": "What is RAG Debugger?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation pipelines."],
+    "expected_answer": "RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation pipelines.",
+    "relevant_terms": ["tool", "inspect", "pipelines", "developers"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q002",
+    "question": "What insights does RAG Debugger provide to developers?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["It provides insights into retrieved contexts, vector similarities, and potential grounding failures."],
+    "expected_answer": "It provides insights into retrieved contexts, vector similarities, and potential grounding failures.",
+    "relevant_terms": ["insights", "contexts", "vector similarities", "grounding failures"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q003",
+    "question": "What steps make up a typical RAG pipeline?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval."],
+    "expected_answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+    "relevant_terms": ["ingestion", "extraction", "chunking", "embedding", "storage", "retrieval"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q004",
+    "question": "What library is used for generating lightweight dense embeddings?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["SentenceTransformers is often used for generating lightweight dense embeddings."],
+    "expected_answer": "SentenceTransformers is often used for generating lightweight dense embeddings.",
+    "relevant_terms": ["SentenceTransformers", "generating", "lightweight", "dense", "embeddings"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q005",
+    "question": "What database is used for local storage?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["ChromaDB is a popular open-source vector database used for local storage."],
+    "expected_answer": "ChromaDB is a popular open-source vector database used for local storage.",
+    "relevant_terms": ["ChromaDB", "popular", "open-source", "vector database", "local storage"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q006",
+    "question": "Is ChromaDB an open-source database?",
+    "category": "Direct factual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["ChromaDB is a popular open-source vector database used for local storage."],
+    "expected_answer": "ChromaDB is a popular open-source vector database used for local storage.",
+    "relevant_terms": ["ChromaDB", "open-source", "vector database"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q007",
+    "question": "How does embedding generation fit into a RAG pipeline?",
+    "category": "Conceptual",
+    "expected_sources": ["sample_document.txt"],
+    "expected_chunks": ["SentenceTransformers is often used for generating lightweight dense embeddings.", "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval."],
+    "expected_answer": "Embedding generation uses SentenceTransformers to create dense embeddings after document chunking, followed by vector storage in ChromaDB.",
+    "relevant_terms": ["SentenceTransformers", "embeddings", "vector storage", "ChromaDB"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q008",
+    "question": "What was the main achievement of the Apollo 11 mission?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["The Apollo 11 mission was the first spaceflight that landed humans on the Moon."],
+    "expected_answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+    "relevant_terms": ["Apollo 11", "first spaceflight", "landed humans", "Moon"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q009",
+    "question": "Where did Apollo 11 launch from?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["It launched from Kennedy Space Center on July 16, 1969."],
+    "expected_answer": "It launched from Kennedy Space Center on July 16, 1969.",
+    "relevant_terms": ["Kennedy Space Center", "July 16, 1969", "launched"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q010",
+    "question": "On what date did Apollo 11 launch?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["It launched from Kennedy Space Center on July 16, 1969."],
+    "expected_answer": "It launched from Kennedy Space Center on July 16, 1969.",
+    "relevant_terms": ["July 16, 1969", "launched", "Kennedy Space Center"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q011",
+    "question": "Who formed the crew that landed the Apollo Lunar Module Eagle?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969."],
+    "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+    "relevant_terms": ["Neil Armstrong", "Buzz Aldrin", "Commander", "Lunar Module Pilot", "Eagle"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q012",
+    "question": "What date did the Apollo Lunar Module Eagle land on the Moon?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969."],
+    "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin landed the Apollo Lunar Module Eagle on July 20, 1969.",
+    "relevant_terms": ["July 20, 1969", "landed", "Eagle", "Moon"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q013",
+    "question": "What was the name of the command module and who piloted it?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Michael Collins flew the Command Module Columbia alone in lunar orbit."],
+    "expected_answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+    "relevant_terms": ["Michael Collins", "Command Module", "Columbia", "lunar orbit"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q014",
+    "question": "Who was the first person to step onto the lunar surface?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later."],
+    "expected_answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+    "relevant_terms": ["Armstrong", "first person", "lunar surface"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q015",
+    "question": "How long after landing did Neil Armstrong step onto the Moon?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later."],
+    "expected_answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+    "relevant_terms": ["six hours", "39 minutes", "lunar surface"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q016",
+    "question": "How much lunar material did the Apollo 11 astronauts collect?",
+    "category": "Direct factual",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["They collected 47.5 pounds (21.5 kg) of lunar material to bring back to Earth."],
+    "expected_answer": "They collected 47.5 pounds (21.5 kg) of lunar material to bring back to Earth.",
+    "relevant_terms": ["47.5 pounds", "21.5 kg", "lunar material", "Earth"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q017",
+    "question": "According to test_apollo.txt, what was Michael Collins' role while the Eagle landed?",
+    "category": "Specific-source",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Michael Collins flew the Command Module Columbia alone in lunar orbit."],
+    "expected_answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+    "relevant_terms": ["Michael Collins", "Columbia", "Command Module", "lunar orbit"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q018",
+    "question": "What pipeline details are tracked according to Section 1 of the Security Test Documentation?",
+    "category": "Direct factual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation."],
+    "expected_answer": "It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation.",
+    "relevant_terms": ["ingestion", "chunking", "ChromaDB", "distance scoring", "context selection", "LLM generation"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q019",
+    "question": "What developer inspection metrics are listed in the Security Test Documentation?",
+    "category": "Direct factual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["Developers can inspect precision, recall, groundedness, and context token efficiency."],
+    "expected_answer": "Developers can inspect precision, recall, groundedness, and context token efficiency.",
+    "relevant_terms": ["precision", "recall", "groundedness", "context token efficiency"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q020",
+    "question": "How should environment variables and port bindings be configured for the developer server?",
+    "category": "Direct factual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["To start the developer server, configure the environment variables properly. Ensure all port bindings are set to localhost for development environments."],
+    "expected_answer": "To start the developer server, configure the environment variables properly and ensure all port bindings are set to localhost for development environments.",
+    "relevant_terms": ["environment variables", "port bindings", "localhost", "developer server"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q021",
+    "question": "Why should retrieved documents be parsed as untrusted context data?",
+    "category": "Conceptual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections."],
+    "expected_answer": "All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+    "relevant_terms": ["untrusted context data", "safeguard", "downstream generation", "indirect prompt injections"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q022",
+    "question": "In security_demo.txt, what security recommendation is provided in Section 4 Conclusion?",
+    "category": "Specific-source",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections."],
+    "expected_answer": "All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+    "relevant_terms": ["untrusted context data", "indirect prompt injections", "safeguard"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q023",
+    "question": "What operations guidance does security_demo.txt specify for development environments?",
+    "category": "Specific-source",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["To start the developer server, configure the environment variables properly. Ensure all port bindings are set to localhost for development environments."],
+    "expected_answer": "To start the developer server, configure the environment variables properly. Ensure all port bindings are set to localhost for development environments.",
+    "relevant_terms": ["environment variables", "port bindings", "localhost"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q024",
+    "question": "Which vector database is mentioned across sample_document.txt and security_demo.txt?",
+    "category": "Multi-chunk",
+    "expected_sources": ["sample_document.txt", "security_demo.txt"],
+    "expected_chunks": ["ChromaDB is a popular open-source vector database used for local storage.", "It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation."],
+    "expected_answer": "ChromaDB is the popular open-source vector database used for local storage and vector embeddings.",
+    "relevant_terms": ["ChromaDB", "vector database", "local storage"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q025",
+    "question": "What evaluation and diagnostic metrics are described for RAG Debugger across sample_document.txt and security_demo.txt?",
+    "category": "Multi-chunk",
+    "expected_sources": ["sample_document.txt", "security_demo.txt"],
+    "expected_chunks": ["It provides insights into retrieved contexts, vector similarities, and potential grounding failures.", "Developers can inspect precision, recall, groundedness, and context token efficiency."],
+    "expected_answer": "RAG Debugger allows developers to inspect precision, recall, groundedness, context token efficiency, vector similarities, and potential grounding failures.",
+    "relevant_terms": ["precision", "recall", "groundedness", "token efficiency", "similarities"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q026",
+    "question": "Who were the members of the Apollo 11 crew and what were their flight roles?",
+    "category": "Multi-chunk",
+    "expected_sources": ["test_apollo.txt"],
+    "expected_chunks": ["Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.", "Michael Collins flew the Command Module Columbia alone in lunar orbit."],
+    "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin landed the Eagle on the Moon, while Michael Collins flew the Command Module Columbia in lunar orbit.",
+    "relevant_terms": ["Neil Armstrong", "Buzz Aldrin", "Michael Collins", "Commander", "Lunar Module Pilot", "Command Module"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q027",
+    "question": "What steps are involved in document processing from ingestion to vector storage in RAG Debugger?",
+    "category": "Multi-chunk",
+    "expected_sources": ["sample_document.txt", "security_demo.txt"],
+    "expected_chunks": ["A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.", "It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation."],
+    "expected_answer": "Document processing involves document ingestion, text extraction, chunking, embedding generation with SentenceTransformers, and vector storage in ChromaDB.",
+    "relevant_terms": ["ingestion", "extraction", "chunking", "SentenceTransformers", "ChromaDB"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q028",
+    "question": "What threat does indirect prompt injection pose to LLM generation in RAG pipelines?",
+    "category": "Conceptual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections."],
+    "expected_answer": "Indirect prompt injections in retrieved documents can tamper with downstream LLM generation unless context is treated as untrusted data.",
+    "relevant_terms": ["indirect prompt injections", "untrusted context data", "downstream generation"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q029",
+    "question": "How do vector databases like ChromaDB enable similarity retrieval in RAG systems?",
+    "category": "Conceptual",
+    "expected_sources": ["sample_document.txt", "security_demo.txt"],
+    "expected_chunks": ["ChromaDB is a popular open-source vector database used for local storage.", "It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation."],
+    "expected_answer": "ChromaDB stores dense vector embeddings generated from chunked documents to allow distance scoring and similarity retrieval.",
+    "relevant_terms": ["ChromaDB", "vector embeddings", "similarity retrieval", "distance scoring"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q030",
+    "question": "Why is context token efficiency an important metric in RAG evaluation?",
+    "category": "Conceptual",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["Developers can inspect precision, recall, groundedness, and context token efficiency."],
+    "expected_answer": "Inspecting context token efficiency allows developers to track and optimize context payload size during retrieval and selection.",
+    "relevant_terms": ["context token efficiency", "precision", "recall", "groundedness"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q031",
+    "question": "What is the title of the document that outlines security benchmark test cases?",
+    "category": "Specific-source",
+    "expected_sources": ["security_demo.txt"],
+    "expected_chunks": ["RAG Debugger Security Test Documentation"],
+    "expected_answer": "RAG Debugger Security Test Documentation contains Section 3 Security Benchmark Examples.",
+    "relevant_terms": ["Security Test Documentation", "Security Benchmark Examples"],
+    "expected_answerable": true
+  },
+  {
+    "id": "q032",
+    "question": "What is quantum computing?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["quantum", "computing"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q033",
+    "question": "What is the capital of France?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["capital", "France"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q034",
+    "question": "Who wrote the RAG Debugger codebase?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["author", "wrote", "RAG Debugger"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q035",
+    "question": "When was the James Webb Space Telescope launched?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["James Webb", "Space Telescope", "launched"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q036",
+    "question": "What is the average distance from Earth to Mars?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["distance", "Earth", "Mars"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q037",
+    "question": "How does the transformer architecture calculate self-attention?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["transformer", "self-attention", "calculate"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q038",
+    "question": "What ingredients are required to bake sourdough bread?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["ingredients", "sourdough", "bread"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q039",
+    "question": "What is the capital city of Japan?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["capital", "Japan"],
+    "expected_answerable": false
+  },
+  {
+    "id": "q040",
+    "question": "Which nation won the 1998 FIFA World Cup?",
+    "category": "Out-of-domain",
+    "expected_sources": [],
+    "expected_chunks": [],
+    "expected_answer": "I cannot determine the answer from the provided context.",
+    "relevant_terms": ["1998", "FIFA", "World Cup", "won"],
+    "expected_answerable": false
+  }
+]

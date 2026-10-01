@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-zinc-900 antialiased font-sans selection:bg-[#00288e]/10 selection:text-[#00288e];
+    background-color: #fafaf4;
+  }
+
+  /* Custom subtle scrollbars */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fafaf4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1aa;
+  }
+}
+
+@layer components {
+  /* Developer unboxed section */
+  .stitch-section {
+    @apply bg-white border border-zinc-200 rounded-sm p-4 transition-all;
+  }
+
+  /* Developer table styling */
+  .stitch-table {
+    @apply w-full text-left text-xs font-sans border-collapse;
+  }
+  .stitch-table th {
+    @apply bg-zinc-100/80 px-3 py-2 font-mono text-[11px] font-semibold text-zinc-600 uppercase border-b border-zinc-200 tracking-wider;
+  }
+  .stitch-table td {
+    @apply px-3 py-2 border-b border-zinc-100 text-zinc-800 text-xs transition-colors duration-150;
+  }
+  .stitch-table tr:hover td {
+    background-color: #f4f4f5;
+  }
+  .stitch-table tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* Primary Deep Blue Button */
+  .btn-primary {
+    @apply bg-[#00288e] hover:bg-[#1e40af] active:bg-[#001d6e] text-white rounded-[4px] px-3 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shadow-none;
+  }
+
+  /* Secondary Neutral Button */
+  .btn-secondary {
+    @apply bg-white hover:bg-zinc-50 border border-zinc-300 text-zinc-700 rounded-[4px] px-3 py-1.5 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Compact Status Badges */
+  .badge-status {
+    @apply px-2 py-0.5 rounded-[3px] text-[11px] font-mono font-medium border inline-flex items-center gap-1;
+  }
+  .badge-good {
+    @apply bg-emerald-50 text-emerald-800 border-emerald-200;
+  }
+  .badge-warn {
+    @apply bg-amber-50 text-amber-800 border-amber-200;
+  }
+  .badge-danger {
+    @apply bg-red-50 text-red-800 border-red-200;
+  }
+  .badge-info {
+    @apply bg-blue-50 text-blue-800 border-blue-200;
+  }
+  .badge-neutral {
+    @apply bg-zinc-100 text-zinc-700 border-zinc-200;
+  }
+}
+
+
+
+

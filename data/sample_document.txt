@@ -1,0 +1,5 @@
+RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation pipelines.
+It provides insights into retrieved contexts, vector similarities, and potential grounding failures.
+A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.
+SentenceTransformers is often used for generating lightweight dense embeddings.
+ChromaDB is a popular open-source vector database used for local storage.

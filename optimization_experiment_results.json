@@ -1,0 +1,2070 @@
+{
+  "experiment": "Basic vs Optimized RAG",
+  "dataset_size": 40,
+  "configuration": {
+    "optimization_distance_threshold": 1.5,
+    "optimization_top_k": 5
+  },
+  "per_question": [
+    {
+      "id": "q001",
+      "question": "What is RAG Debugger?",
+      "category": "Direct factual",
+      "expected_answer": "RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation pipelines.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6331132002206027,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 552,
+        "total_tokens": 595,
+        "retrieval_latency_ms": 16.10899999650428,
+        "generation_latency_ms": 0.14699999883305281,
+        "total_latency_ms": 110.19520000263583
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6331132002206027,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 299,
+        "total_tokens": 342,
+        "retrieval_latency_ms": 17.448699996748473,
+        "generation_latency_ms": 0.10779999865917489,
+        "total_latency_ms": 77.8823000000557
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 42.45063879210221
+      }
+    },
+    {
+      "id": "q002",
+      "question": "What insights does RAG Debugger provide to developers?",
+      "category": "Direct factual",
+      "expected_answer": "It provides insights into retrieved contexts, vector similarities, and potential grounding failures.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.46093519666270155,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 560,
+        "total_tokens": 603,
+        "retrieval_latency_ms": 15.70019999780925,
+        "generation_latency_ms": 0.1336999994236976,
+        "total_latency_ms": 106.65760000119917
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.46093519666270155,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 456,
+        "total_tokens": 499,
+        "retrieval_latency_ms": 16.190399997867644,
+        "generation_latency_ms": 0.149200001033023,
+        "total_latency_ms": 124.68069999886211
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 13.414634146341465
+      }
+    },
+    {
+      "id": "q003",
+      "question": "What steps make up a typical RAG pipeline?",
+      "category": "Direct factual",
+      "expected_answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.2,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 605,
+        "total_tokens": 641,
+        "retrieval_latency_ms": 16.379599997890182,
+        "generation_latency_ms": 0.21769999875687063,
+        "total_latency_ms": 124.30950000270968
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.2,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 305,
+        "total_tokens": 341,
+        "retrieval_latency_ms": 15.4945999966003,
+        "generation_latency_ms": 0.22519999765791,
+        "total_latency_ms": 78.12050000211457
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 48.25065274151436
+      }
+    },
+    {
+      "id": "q004",
+      "question": "What library is used for generating lightweight dense embeddings?",
+      "category": "Direct factual",
+      "expected_answer": "SentenceTransformers is often used for generating lightweight dense embeddings.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "SentenceTransformers is often used for generating lightweight dense embeddings.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 512,
+        "total_tokens": 531,
+        "retrieval_latency_ms": 16.59970000036992,
+        "generation_latency_ms": 0.15249999705702066,
+        "total_latency_ms": 105.74500000075204
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "SentenceTransformers is often used for generating lightweight dense embeddings.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 357,
+        "total_tokens": 376,
+        "retrieval_latency_ms": 18.585499994514976,
+        "generation_latency_ms": 0.15069999790284783,
+        "total_latency_ms": 93.6684000043897
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 28.76892692560895
+      }
+    },
+    {
+      "id": "q005",
+      "question": "What database is used for local storage?",
+      "category": "Direct factual",
+      "expected_answer": "ChromaDB is a popular open-source vector database used for local storage.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 506,
+        "total_tokens": 524,
+        "retrieval_latency_ms": 16.42560000618687,
+        "generation_latency_ms": 0.14850000297883525,
+        "total_latency_ms": 107.10970000218367
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 202,
+        "total_tokens": 220,
+        "retrieval_latency_ms": 16.807699998025782,
+        "generation_latency_ms": 0.10420000035082921,
+        "total_latency_ms": 78.85879999957979
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 61.685319289005925
+      }
+    },
+    {
+      "id": "q006",
+      "question": "Is ChromaDB an open-source database?",
+      "category": "Direct factual",
+      "expected_answer": "ChromaDB is a popular open-source vector database used for local storage.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 595,
+        "total_tokens": 613,
+        "retrieval_latency_ms": 15.932900001644157,
+        "generation_latency_ms": 0.16460000188089907,
+        "total_latency_ms": 110.40420000063023
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 201,
+        "total_tokens": 219,
+        "retrieval_latency_ms": 20.55340000515571,
+        "generation_latency_ms": 0.09709999721962959,
+        "total_latency_ms": 78.57789999980014
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 69.02607770090474
+      }
+    },
+    {
+      "id": "q007",
+      "question": "How does embedding generation fit into a RAG pipeline?",
+      "category": "Conceptual",
+      "expected_answer": "Embedding generation uses SentenceTransformers to create dense embeddings after document chunking, followed by vector storage in ChromaDB.",
+      "expected_sources": [
+        "sample_document.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.49352538863067974,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 510,
+        "total_tokens": 546,
+        "retrieval_latency_ms": 17.255099999601953,
+        "generation_latency_ms": 0.14969999756431207,
+        "total_latency_ms": 108.45449999760604
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.49352538863067974,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 354,
+        "total_tokens": 390,
+        "retrieval_latency_ms": 13.79810000071302,
+        "generation_latency_ms": 0.13419999595498666,
+        "total_latency_ms": 117.97549999755574
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 28.76892692560895
+      }
+    },
+    {
+      "id": "q008",
+      "question": "What was the main achievement of the Apollo 11 mission?",
+      "category": "Direct factual",
+      "expected_answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 570,
+        "total_tokens": 589,
+        "retrieval_latency_ms": 20.121800000197254,
+        "generation_latency_ms": 0.18080000154441223,
+        "total_latency_ms": 135.91010000527604
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 215,
+        "total_tokens": 234,
+        "retrieval_latency_ms": 18.401899993477855,
+        "generation_latency_ms": 0.10140000085812062,
+        "total_latency_ms": 76.46789999853354
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 64.51612903225806
+      }
+    },
+    {
+      "id": "q009",
+      "question": "Where did Apollo 11 launch from?",
+      "category": "Direct factual",
+      "expected_answer": "It launched from Kennedy Space Center on July 16, 1969.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.47391036949029425,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 654,
+        "total_tokens": 673,
+        "retrieval_latency_ms": 16.48419999401085,
+        "generation_latency_ms": 0.18120000459020957,
+        "total_latency_ms": 106.45820000354433
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.47391036949029425,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 210,
+        "total_tokens": 229,
+        "retrieval_latency_ms": 16.838800002005883,
+        "generation_latency_ms": 0.10369999654358253,
+        "total_latency_ms": 79.25669999531237
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 70.52186177715092
+      }
+    },
+    {
+      "id": "q010",
+      "question": "On what date did Apollo 11 launch?",
+      "category": "Direct factual",
+      "expected_answer": "It launched from Kennedy Space Center on July 16, 1969.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.47391036949029425,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 655,
+        "total_tokens": 674,
+        "retrieval_latency_ms": 14.621900001657195,
+        "generation_latency_ms": 0.1871999993454665,
+        "total_latency_ms": 111.39410000032512
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.47391036949029425,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 210,
+        "total_tokens": 229,
+        "retrieval_latency_ms": 16.875299996172544,
+        "generation_latency_ms": 0.13760000001639128,
+        "total_latency_ms": 73.7176000038744
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 70.52186177715092
+      }
+    },
+    {
+      "id": "q011",
+      "question": "Who formed the crew that landed the Apollo Lunar Module Eagle?",
+      "category": "Direct factual",
+      "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 662,
+        "total_tokens": 698,
+        "retrieval_latency_ms": 16.553100002056453,
+        "generation_latency_ms": 0.2199000009568408,
+        "total_latency_ms": 104.91480000200681
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 217,
+        "total_tokens": 253,
+        "retrieval_latency_ms": 17.43239999632351,
+        "generation_latency_ms": 0.10579999798210338,
+        "total_latency_ms": 78.2649999964633
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 70.52186177715092
+      }
+    },
+    {
+      "id": "q012",
+      "question": "What date did the Apollo Lunar Module Eagle land on the Moon?",
+      "category": "Direct factual",
+      "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin landed the Apollo Lunar Module Eagle on July 20, 1969.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7008200056107939,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 661,
+        "total_tokens": 697,
+        "retrieval_latency_ms": 17.017799997120164,
+        "generation_latency_ms": 0.268599993432872,
+        "total_latency_ms": 108.47259999718517
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7008200056107939,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 217,
+        "total_tokens": 253,
+        "retrieval_latency_ms": 17.479900001490023,
+        "generation_latency_ms": 0.10789999942062423,
+        "total_latency_ms": 101.72030000103405
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 70.52186177715092
+      }
+    },
+    {
+      "id": "q013",
+      "question": "What was the name of the command module and who piloted it?",
+      "category": "Direct factual",
+      "expected_answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 661,
+        "total_tokens": 678,
+        "retrieval_latency_ms": 18.300099996849895,
+        "generation_latency_ms": 0.29519999952754006,
+        "total_latency_ms": 132.16259999899194
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 162,
+        "total_tokens": 179,
+        "retrieval_latency_ms": 17.87039999908302,
+        "generation_latency_ms": 0.09439999848837033,
+        "total_latency_ms": 56.03829999745358
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 76.4927127409497
+      }
+    },
+    {
+      "id": "q014",
+      "question": "Who was the first person to step onto the lunar surface?",
+      "category": "Direct factual",
+      "expected_answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 660,
+        "total_tokens": 684,
+        "retrieval_latency_ms": 18.038800000795163,
+        "generation_latency_ms": 0.20519999816315249,
+        "total_latency_ms": 110.20799999823794
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 216,
+        "total_tokens": 240,
+        "retrieval_latency_ms": 16.8171000041184,
+        "generation_latency_ms": 0.10659999679774046,
+        "total_latency_ms": 73.40059999842197
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 70.52186177715092
+      }
+    },
+    {
+      "id": "q015",
+      "question": "How long after landing did Neil Armstrong step onto the Moon?",
+      "category": "Direct factual",
+      "expected_answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 571,
+        "total_tokens": 595,
+        "retrieval_latency_ms": 16.361999994842336,
+        "generation_latency_ms": 0.19320000137668103,
+        "total_latency_ms": 103.31140000198502
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Armstrong became the first person to step onto the lunar surface six hours and 39 minutes later.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 217,
+        "total_tokens": 241,
+        "retrieval_latency_ms": 16.9536999965203,
+        "generation_latency_ms": 0.10130000009667128,
+        "total_latency_ms": 75.86989999981597
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 64.51612903225806
+      }
+    },
+    {
+      "id": "q016",
+      "question": "How much lunar material did the Apollo 11 astronauts collect?",
+      "category": "Direct factual",
+      "expected_answer": "They collected 47.5 pounds (21.5 kg) of lunar material to bring back to Earth.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "They collected 47.5 pounds (21.5 kg) of lunar material to bring back to Earth.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 558,
+        "total_tokens": 577,
+        "retrieval_latency_ms": 16.456799996376503,
+        "generation_latency_ms": 0.17499999376013875,
+        "total_latency_ms": 285.08480000164127
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "They collected 47.5 pounds (21.5 kg) of lunar material to bring back to Earth.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 1.0,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 217,
+        "total_tokens": 236,
+        "retrieval_latency_ms": 13.276500001666136,
+        "generation_latency_ms": 0.11349999840604141,
+        "total_latency_ms": 218.31000000383938
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 63.311878291398486
+      }
+    },
+    {
+      "id": "q017",
+      "question": "According to test_apollo.txt, what was Michael Collins' role while the Eagle landed?",
+      "category": "Specific-source",
+      "expected_answer": "Michael Collins flew the Command Module Columbia alone in lunar orbit.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.49333142924279877,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 617,
+        "total_tokens": 653,
+        "retrieval_latency_ms": 20.5093000040506,
+        "generation_latency_ms": 0.20760000188602135,
+        "total_latency_ms": 130.66309999703662
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin formed the American crew that landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.49333142924279877,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 168,
+        "total_tokens": 204,
+        "retrieval_latency_ms": 18.981599998369347,
+        "generation_latency_ms": 0.10279999696649611,
+        "total_latency_ms": 58.8177999961772
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 74.01247401247402
+      }
+    },
+    {
+      "id": "q018",
+      "question": "What pipeline details are tracked according to Section 1 of the Security Test Documentation?",
+      "category": "Direct factual",
+      "expected_answer": "It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4573231250889472,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 711,
+        "total_tokens": 754,
+        "retrieval_latency_ms": 17.803000002459157,
+        "generation_latency_ms": 0.22309999621938914,
+        "total_latency_ms": 105.62609999760753
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4573231250889472,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.75,
+        "input_tokens": 416,
+        "total_tokens": 459,
+        "retrieval_latency_ms": 15.307699999539182,
+        "generation_latency_ms": 0.15499999426538125,
+        "total_latency_ms": 94.62920000078157
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 43.31293706293706
+      }
+    },
+    {
+      "id": "q019",
+      "question": "What developer inspection metrics are listed in the Security Test Documentation?",
+      "category": "Direct factual",
+      "expected_answer": "Developers can inspect precision, recall, groundedness, and context token efficiency.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4812443955581157,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 708,
+        "total_tokens": 751,
+        "retrieval_latency_ms": 17.378199998347554,
+        "generation_latency_ms": 0.19860000611515716,
+        "total_latency_ms": 106.97660000005271
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4812443955581157,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 316,
+        "total_tokens": 359,
+        "retrieval_latency_ms": 13.072900001134258,
+        "generation_latency_ms": 0.2206999997724779,
+        "total_latency_ms": 70.58839999808697
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 56.29370629370629
+      }
+    },
+    {
+      "id": "q020",
+      "question": "How should environment variables and port bindings be configured for the developer server?",
+      "category": "Direct factual",
+      "expected_answer": "To start the developer server, configure the environment variables properly and ensure all port bindings are set to localhost for development environments.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": ": System Administration & Operations To start the developer server, configure the environment variables properly.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5675942553050135,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 711,
+        "total_tokens": 739,
+        "retrieval_latency_ms": 15.430000006745104,
+        "generation_latency_ms": 0.20059999951627105,
+        "total_latency_ms": 103.96049999690149
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": ": System Administration & Operations To start the developer server, configure the environment variables properly.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5675942553050135,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.25,
+        "input_tokens": 170,
+        "total_tokens": 198,
+        "retrieval_latency_ms": 15.960800003085751,
+        "generation_latency_ms": 0.0940000027185306,
+        "total_latency_ms": 58.07049999566516
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 78.14685314685315
+      }
+    },
+    {
+      "id": "q021",
+      "question": "Why should retrieved documents be parsed as untrusted context data?",
+      "category": "Conceptual",
+      "expected_answer": "All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7601850749392642,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.6,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.75,
+        "input_tokens": 603,
+        "total_tokens": 642,
+        "retrieval_latency_ms": 18.154499994125217,
+        "generation_latency_ms": 0.2578999992692843,
+        "total_latency_ms": 106.80860000138637
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7601850749392642,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.6,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 262,
+        "total_tokens": 301,
+        "retrieval_latency_ms": 16.933699997025542,
+        "generation_latency_ms": 0.11040000390494242,
+        "total_latency_ms": 85.56050000333926
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 57.58382118147951
+      }
+    },
+    {
+      "id": "q022",
+      "question": "In security_demo.txt, what security recommendation is provided in Section 4 Conclusion?",
+      "category": "Specific-source",
+      "expected_answer": "All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7601850749392642,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 710,
+        "total_tokens": 749,
+        "retrieval_latency_ms": 17.898500002047513,
+        "generation_latency_ms": 0.2282999994349666,
+        "total_latency_ms": 126.87710000318475
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 4,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7601850749392642,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 563,
+        "total_tokens": 602,
+        "retrieval_latency_ms": 15.462000003026333,
+        "generation_latency_ms": 0.2204000047640875,
+        "total_latency_ms": 109.40180000034161
+      },
+      "optimization": {
+        "chunks_removed": 1,
+        "context_reduction_percentage": 21.45979020979021
+      }
+    },
+    {
+      "id": "q023",
+      "question": "What operations guidance does security_demo.txt specify for development environments?",
+      "category": "Specific-source",
+      "expected_answer": "To start the developer server, configure the environment variables properly. Ensure all port bindings are set to localhost for development environments.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Ensure all port bindings are set to localhost for development environments.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.635628669371262,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 709,
+        "total_tokens": 727,
+        "retrieval_latency_ms": 17.478199995821342,
+        "generation_latency_ms": 0.21520000154851004,
+        "total_latency_ms": 108.41200000140816
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 4,
+        "answer": "Ensure all port bindings are set to localhost for development environments.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.635628669371262,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 563,
+        "total_tokens": 581,
+        "retrieval_latency_ms": 15.263999994203914,
+        "generation_latency_ms": 0.1733999961288646,
+        "total_latency_ms": 93.66969999973662
+      },
+      "optimization": {
+        "chunks_removed": 1,
+        "context_reduction_percentage": 21.45979020979021
+      }
+    },
+    {
+      "id": "q024",
+      "question": "Which vector database is mentioned across sample_document.txt and security_demo.txt?",
+      "category": "Multi-chunk",
+      "expected_answer": "ChromaDB is the popular open-source vector database used for local storage and vector embeddings.",
+      "expected_sources": [
+        "sample_document.txt",
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7181844574128952,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.8333333333333334,
+        "input_tokens": 607,
+        "total_tokens": 625,
+        "retrieval_latency_ms": 14.772200003790203,
+        "generation_latency_ms": 0.24139999732142314,
+        "total_latency_ms": 104.58939999807626
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 4,
+        "answer": "ChromaDB is a popular open-source vector database used for local storage.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.7181844574128952,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.6666666666666666,
+        "input_tokens": 459,
+        "total_tokens": 477,
+        "retrieval_latency_ms": 17.225499999767635,
+        "generation_latency_ms": 0.14799999917158857,
+        "total_latency_ms": 97.20050000032643
+      },
+      "optimization": {
+        "chunks_removed": 1,
+        "context_reduction_percentage": 26.609898882384247
+      }
+    },
+    {
+      "id": "q025",
+      "question": "What evaluation and diagnostic metrics are described for RAG Debugger across sample_document.txt and security_demo.txt?",
+      "category": "Multi-chunk",
+      "expected_answer": "RAG Debugger allows developers to inspect precision, recall, groundedness, context token efficiency, vector similarities, and potential grounding failures.",
+      "expected_sources": [
+        "sample_document.txt",
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5800528130247465,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.8333333333333334,
+        "input_tokens": 616,
+        "total_tokens": 659,
+        "retrieval_latency_ms": 17.45929999742657,
+        "generation_latency_ms": 0.19240000256104395,
+        "total_latency_ms": 108.96660000435077
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5800528130247465,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.3333333333333333,
+        "input_tokens": 324,
+        "total_tokens": 367,
+        "retrieval_latency_ms": 17.938600001798477,
+        "generation_latency_ms": 0.13659999967785552,
+        "total_latency_ms": 75.77060000039637
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 47.25918041511442
+      }
+    },
+    {
+      "id": "q026",
+      "question": "Who were the members of the Apollo 11 crew and what were their flight roles?",
+      "category": "Multi-chunk",
+      "expected_answer": "Commander Neil Armstrong and Lunar Module Pilot Buzz Aldrin landed the Eagle on the Moon, while Michael Collins flew the Command Module Columbia in lunar orbit.",
+      "expected_sources": [
+        "test_apollo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5174659443526851,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 665,
+        "total_tokens": 684,
+        "retrieval_latency_ms": 17.327699999441393,
+        "generation_latency_ms": 0.20280000171624124,
+        "total_latency_ms": 103.45159999997122
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "The Apollo 11 mission was the first spaceflight that landed humans on the Moon.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5174659443526851,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 166,
+        "total_tokens": 185,
+        "retrieval_latency_ms": 18.173700002080295,
+        "generation_latency_ms": 0.09449999924981967,
+        "total_latency_ms": 69.30580000334885
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 76.4927127409497
+      }
+    },
+    {
+      "id": "q027",
+      "question": "What steps are involved in document processing from ingestion to vector storage in RAG Debugger?",
+      "category": "Multi-chunk",
+      "expected_answer": "Document processing involves document ingestion, text extraction, chunking, embedding generation with SentenceTransformers, and vector storage in ChromaDB.",
+      "expected_sources": [
+        "sample_document.txt",
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5181724279124751,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.6666666666666666,
+        "input_tokens": 520,
+        "total_tokens": 556,
+        "retrieval_latency_ms": 17.00429999618791,
+        "generation_latency_ms": 0.21739999647252262,
+        "total_latency_ms": 136.00050000241026
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5181724279124751,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 365,
+        "total_tokens": 401,
+        "retrieval_latency_ms": 18.09299999877112,
+        "generation_latency_ms": 0.2015999998548068,
+        "total_latency_ms": 97.44450000289362
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 28.76892692560895
+      }
+    },
+    {
+      "id": "q028",
+      "question": "What threat does indirect prompt injection pose to LLM generation in RAG pipelines?",
+      "category": "Conceptual",
+      "expected_answer": "Indirect prompt injections in retrieved documents can tamper with downstream LLM generation unless context is treated as untrusted data.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6184888084633664,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 709,
+        "total_tokens": 748,
+        "retrieval_latency_ms": 13.414600005489774,
+        "generation_latency_ms": 0.2572999947005883,
+        "total_latency_ms": 103.24039999977686
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "Section 4: Conclusion All retrieved documents should be parsed as untrusted context data to safeguard downstream generation against indirect prompt injections.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6184888084633664,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 412,
+        "total_tokens": 451,
+        "retrieval_latency_ms": 17.116700000769924,
+        "generation_latency_ms": 0.1596000001882203,
+        "total_latency_ms": 91.97970000241185
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 43.70629370629371
+      }
+    },
+    {
+      "id": "q029",
+      "question": "How do vector databases like ChromaDB enable similarity retrieval in RAG systems?",
+      "category": "Conceptual",
+      "expected_answer": "ChromaDB stores dense vector embeddings generated from chunked documents to allow distance scoring and similarity retrieval.",
+      "expected_sources": [
+        "sample_document.txt",
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4945607078991165,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.6666666666666666,
+        "input_tokens": 516,
+        "total_tokens": 552,
+        "retrieval_latency_ms": 17.157999995106366,
+        "generation_latency_ms": 0.1688999982434325,
+        "total_latency_ms": 102.05709999718238
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4945607078991165,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.6666666666666666,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.16666666666666666,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 361,
+        "total_tokens": 397,
+        "retrieval_latency_ms": 16.250900000159163,
+        "generation_latency_ms": 0.1416000013705343,
+        "total_latency_ms": 93.16310000576777
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 28.76892692560895
+      }
+    },
+    {
+      "id": "q030",
+      "question": "Why is context token efficiency an important metric in RAG evaluation?",
+      "category": "Conceptual",
+      "expected_answer": "Inspecting context token efficiency allows developers to track and optimize context payload size during retrieval and selection.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Developers can inspect precision, recall, groundedness, and context token efficiency.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5490565119821293,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.5,
+        "input_tokens": 514,
+        "total_tokens": 535,
+        "retrieval_latency_ms": 16.207699998631142,
+        "generation_latency_ms": 0.16710000636521727,
+        "total_latency_ms": 113.53169999347301
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "Developers can inspect precision, recall, groundedness, and context token efficiency.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.5490565119821293,
+        "precision_at_1": 1.0,
+        "precision_at_3": 0.3333333333333333,
+        "precision_at_5": 0.4,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.25,
+        "input_tokens": 312,
+        "total_tokens": 333,
+        "retrieval_latency_ms": 14.22199999797158,
+        "generation_latency_ms": 0.10409999958937988,
+        "total_latency_ms": 70.4872999995132
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 34.7597103357472
+      }
+    },
+    {
+      "id": "q031",
+      "question": "What is the title of the document that outlines security benchmark test cases?",
+      "category": "Specific-source",
+      "expected_answer": "RAG Debugger Security Test Documentation contains Section 3 Security Benchmark Examples.",
+      "expected_sources": [
+        "security_demo.txt"
+      ],
+      "expected_answerable": true,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6231800501206233,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 707,
+        "total_tokens": 750,
+        "retrieval_latency_ms": 17.83399999840185,
+        "generation_latency_ms": 0.2133999951183796,
+        "total_latency_ms": 107.0739000060712
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 3,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.6231800501206233,
+        "precision_at_1": 1.0,
+        "precision_at_3": 1.0,
+        "precision_at_5": 0.8,
+        "recall_at_1": 0.25,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.75,
+        "input_tokens": 413,
+        "total_tokens": 456,
+        "retrieval_latency_ms": 16.66710000426974,
+        "generation_latency_ms": 0.17669999942881986,
+        "total_latency_ms": 122.50109999877168
+      },
+      "optimization": {
+        "chunks_removed": 2,
+        "context_reduction_percentage": 43.31293706293706
+      }
+    },
+    {
+      "id": "q032",
+      "question": "What is quantum computing?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "Quantum computing relies on qubits to perform computations in superposition.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4341239497869129,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 503,
+        "total_tokens": 522,
+        "retrieval_latency_ms": 21.7969000004814,
+        "generation_latency_ms": 0.13910000416217372,
+        "total_latency_ms": 133.48519999999553
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "Quantum computing relies on qubits to perform computations in superposition.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4341239497869129,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 64,
+        "total_tokens": 83,
+        "retrieval_latency_ms": 15.841799999179784,
+        "generation_latency_ms": 0.06610000127693638,
+        "total_latency_ms": 49.578500002098735
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 90.78341013824884
+      }
+    },
+    {
+      "id": "q033",
+      "question": "What is the capital of France?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 412,
+        "total_tokens": 426,
+        "retrieval_latency_ms": 16.776900003605988,
+        "generation_latency_ms": 0.13329999637790024,
+        "total_latency_ms": 16.950599994743243
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 0,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 7,
+        "total_tokens": 21,
+        "retrieval_latency_ms": 16.165100001671817,
+        "generation_latency_ms": 0.01080000220099464,
+        "total_latency_ms": 16.196500000660308
+      },
+      "optimization": {
+        "chunks_removed": 5,
+        "context_reduction_percentage": 100.0
+      }
+    },
+    {
+      "id": "q034",
+      "question": "Who wrote the RAG Debugger codebase?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4104496165212298,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 556,
+        "total_tokens": 599,
+        "retrieval_latency_ms": 15.500399997108616,
+        "generation_latency_ms": 0.15969999367371202,
+        "total_latency_ms": 106.51830000279006
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 2,
+        "answer": "RAG Debugger Security Test Documentation Section 1: Architecture Overview The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4104496165212298,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 303,
+        "total_tokens": 346,
+        "retrieval_latency_ms": 17.86100000026636,
+        "generation_latency_ms": 0.10960000508930534,
+        "total_latency_ms": 78.65250000031665
+      },
+      "optimization": {
+        "chunks_removed": 3,
+        "context_reduction_percentage": 42.45063879210221
+      }
+    },
+    {
+      "id": "q035",
+      "question": "When was the James Webb Space Telescope launched?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "It launched from Kennedy Space Center on July 16, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4181418212397325,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 568,
+        "total_tokens": 581,
+        "retrieval_latency_ms": 13.431399995170068,
+        "generation_latency_ms": 0.17389999993611127,
+        "total_latency_ms": 108.80180000094697
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "It launched from Kennedy Space Center on July 16, 1969.",
+        "grounding_status": "GROUNDED",
+        "answer_relevance": 0.4181418212397325,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 159,
+        "total_tokens": 172,
+        "retrieval_latency_ms": 16.416899998148438,
+        "generation_latency_ms": 0.07619999814778566,
+        "total_latency_ms": 55.59079999511596
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 71.70345217883418
+      }
+    },
+    {
+      "id": "q036",
+      "question": "What is the average distance from Earth to Mars?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 517,
+        "total_tokens": 531,
+        "retrieval_latency_ms": 13.440800001262687,
+        "generation_latency_ms": 0.1664000010350719,
+        "total_latency_ms": 13.652000001457054
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 1,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 66,
+        "total_tokens": 80,
+        "retrieval_latency_ms": 16.283899996778928,
+        "generation_latency_ms": 0.07020000339252874,
+        "total_latency_ms": 16.38200000161305
+      },
+      "optimization": {
+        "chunks_removed": 4,
+        "context_reduction_percentage": 91.87979539641944
+      }
+    },
+    {
+      "id": "q037",
+      "question": "How does the transformer architecture calculate self-attention?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 520,
+        "total_tokens": 534,
+        "retrieval_latency_ms": 14.668299998447765,
+        "generation_latency_ms": 0.15360000543296337,
+        "total_latency_ms": 14.950899996620137
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 0,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 16,
+        "total_tokens": 30,
+        "retrieval_latency_ms": 16.92719999846304,
+        "generation_latency_ms": 0.011299998732283711,
+        "total_latency_ms": 16.963400004897267
+      },
+      "optimization": {
+        "chunks_removed": 5,
+        "context_reduction_percentage": 100.0
+      }
+    },
+    {
+      "id": "q038",
+      "question": "What ingredients are required to bake sourdough bread?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 658,
+        "total_tokens": 672,
+        "retrieval_latency_ms": 13.966700003948063,
+        "generation_latency_ms": 0.18319999799132347,
+        "total_latency_ms": 14.195600000675768
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 0,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 13,
+        "total_tokens": 27,
+        "retrieval_latency_ms": 17.970900000364054,
+        "generation_latency_ms": 0.010600000678095967,
+        "total_latency_ms": 18.00340000045253
+      },
+      "optimization": {
+        "chunks_removed": 5,
+        "context_reduction_percentage": 100.0
+      }
+    },
+    {
+      "id": "q039",
+      "question": "What is the capital city of Japan?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 413,
+        "total_tokens": 427,
+        "retrieval_latency_ms": 16.358900000341237,
+        "generation_latency_ms": 0.13239999680081382,
+        "total_latency_ms": 16.533900001377333
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 0,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 8,
+        "total_tokens": 22,
+        "retrieval_latency_ms": 17.212500002642628,
+        "generation_latency_ms": 0.012999997125007212,
+        "total_latency_ms": 17.252400000870693
+      },
+      "optimization": {
+        "chunks_removed": 5,
+        "context_reduction_percentage": 100.0
+      }
+    },
+    {
+      "id": "q040",
+      "question": "Which nation won the 1998 FIFA World Cup?",
+      "category": "Out-of-domain",
+      "expected_answer": "I cannot determine the answer from the provided context.",
+      "expected_sources": [],
+      "expected_answerable": false,
+      "basic": {
+        "retrieved_count": 5,
+        "selected_count": 5,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 516,
+        "total_tokens": 530,
+        "retrieval_latency_ms": 18.546599996625446,
+        "generation_latency_ms": 0.17039999511325732,
+        "total_latency_ms": 18.7625000035041
+      },
+      "optimized": {
+        "retrieved_count": 5,
+        "selected_count": 0,
+        "answer": "I cannot determine the answer from the provided context.",
+        "grounding_status": "NO_ANSWER",
+        "answer_relevance": 1.0,
+        "precision_at_1": 0.0,
+        "precision_at_3": 0.0,
+        "precision_at_5": 0.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "input_tokens": 10,
+        "total_tokens": 24,
+        "retrieval_latency_ms": 20.602600001438987,
+        "generation_latency_ms": 0.015300000086426735,
+        "total_latency_ms": 20.64529999915976
+      },
+      "optimization": {
+        "chunks_removed": 5,
+        "context_reduction_percentage": 100.0
+      }
+    }
+  ],
+  "aggregate": {
+    "total_questions": 40,
+    "retrieval_failures": 0,
+    "no_answer_cases": 6,
+    "questions_with_chunks_removed": 40,
+    "metrics": {
+      "precision_at_1": {
+        "basic": 0.675,
+        "optimized": 0.675
+      },
+      "precision_at_3": {
+        "basic": 0.525,
+        "optimized": 0.525
+      },
+      "precision_at_5": {
+        "basic": 0.38000000000000017,
+        "optimized": 0.38000000000000017
+      },
+      "recall_at_1": {
+        "basic": 0.4854166666666666,
+        "optimized": 0.4854166666666666
+      },
+      "recall_at_3": {
+        "basic": 0.0,
+        "optimized": 0.0
+      },
+      "recall_at_5": {
+        "basic": 0.94375,
+        "optimized": 0.7875
+      },
+      "grounded_percentage": {
+        "basic": 85.0,
+        "optimized": 85.0
+      },
+      "answer_relevance": {
+        "basic": 0.7318395915816487,
+        "optimized": 0.7318395915816487
+      },
+      "average_input_tokens": {
+        "basic": 594.45,
+        "optimized": 249.275
+      },
+      "average_total_tokens": {
+        "basic": 621.6,
+        "optimized": 276.425
+      },
+      "average_retrieval_latency": {
+        "basic": 16.716874999474385,
+        "optimized": 16.819412499535247
+      },
+      "average_generation_latency": {
+        "basic": 0.19059999940509442,
+        "optimized": 0.11407749952923041
+      },
+      "average_total_latency": {
+        "basic": 102.07195750044775,
+        "optimized": 76.51664250024623
+      },
+      "average_chunks_retained": {
+        "basic": 5.0,
+        "optimized": 1.925
+      }
+    },
+    "optimization": {
+      "average_chunks_removed": 3.075,
+      "average_context_reduction_percentage": 59.81441475302461
+    },
+    "grounding_comparison": {
+      "basic_only": 0,
+      "optimized_only": 0,
+      "both": 34,
+      "neither": 6
+    }
+  }
+}
