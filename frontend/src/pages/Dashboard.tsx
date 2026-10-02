@@ -59,7 +59,7 @@ export const Dashboard: React.FC = () => {
       const statusMsg = err.response?.status ? `HTTP ${err.response.status}` : null;
       const codeMsg = err.code ? `[Code: ${err.code}]` : null;
       const fullError = [statusMsg, codeMsg, err.message, detailMsg].filter(Boolean).join(' - ');
-      setError(fullError || 'Failed to connect to RAG Debugger API');
+      setError(fullError || 'Failed to connect to NookBase API');
     } finally {
       setIsLoading(false);
     }

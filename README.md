@@ -1,8 +1,10 @@
-# RAG Debugger
+# NookBase
 
-**An end-to-end observability, diagnostic, and evaluation workstation for Retrieval-Augmented Generation (RAG) pipelines.**
+> **Understand what happens inside your RAG pipeline.**
 
-RAG Debugger is an engineering workstation designed to inspect, audit, diagnose, and benchmark Retrieval-Augmented Generation (RAG) applications. It isolates silent failures across document ingestion, vector retrieval, context pruning, heuristic answer grounding, stage latencies, token consumption, and prompt injection security.
+NookBase is a developer observability and debugging tool for understanding, evaluating, and optimizing RAG pipelines.
+
+NookBase helps developers inspect and diagnose retrieval quality, retrieved context chunks, answer grounding, context efficiency, security risks, root causes, evaluation metrics, and optimization trade-offs in Retrieval-Augmented Generation (RAG) applications.
 
 ---
 
@@ -10,7 +12,7 @@ RAG Debugger is an engineering workstation designed to inspect, audit, diagnose,
 
 RAG applications frequently fail in production without throwing runtime errors. A pipeline might return an ungrounded answer, fail to retrieve relevant facts, pass bloated context chunks to an LLM, or fall victim to prompt injection attacks embedded inside external documents.
 
-Existing developer tools focus primarily on tracing LLM API calls or managing agent workflows. **RAG Debugger** was built to answer the fundamental question developers ask when a RAG system behaves unexpectedly:
+Existing developer tools focus primarily on tracing LLM API calls or managing agent workflows. **NookBase** was built to answer the fundamental question developers ask when a RAG system behaves unexpectedly:
 
 > *"WHY did my RAG pipeline produce this specific response?"*
 
@@ -28,7 +30,7 @@ It exposes the internal state of every pipeline stage, enabling engineers to ins
 
 ## How It Works
 
-RAG Debugger executes a multi-stage deterministic observability pipeline:
+NookBase executes a multi-stage deterministic observability pipeline:
 
 ```text
 User Query
@@ -42,7 +44,7 @@ User Query
                                                    └──> Root Cause & Security Diagnostics
 ```
 
-*Note: RAG Debugger is a technical developer debugging and observability workstation, NOT a generic conversational chatbot.*
+*Note: NookBase is a technical developer debugging and observability workstation, NOT a generic conversational chatbot.*
 
 ---
 
@@ -150,13 +152,13 @@ Comparing **Basic RAG** (Standard K=5 dense retrieval) vs. **Optimized RAG** (Si
 | Metric | Basic RAG (Top-K=5) | Optimized RAG (Pruned) | Impact / Delta |
 | :--- | :--- | :--- | :--- |
 | **Precision@1** | `0.675` | `0.675` | `0.00` (Neutral) |
-| **Recall@5** | `0.944` (94.38%) | `0.788` (78.75%) | **-15.63%** (Recall drop) |
-| **Average Input Tokens** | `594.5 tokens` | `249.3 tokens` | **-58.07%** (Input Token Reduction) |
-| **Average Context Reduction**| `0.0%` | `59.81%` | **+59.81%** (Context Reduction) |
-| **Average Total Latency** | `102.07 ms` | `76.52 ms` | **-25.04%** (Latency Reduction) |
+| **Recall@5** | `0.944` (94.38%) | `0.788` (78.75%) | **-15.63%** (-0.15625 delta) |
+| **Average Input Tokens** | `594.5 tokens` | `249.3 tokens` | **-58.1%** (Input Token Reduction) |
+| **Average Context Reduction**| `0.0%` | `59.8%` | **+59.8%** (Context Reduction) |
+| **Average Total Latency** | `102.07 ms` | `76.52 ms` | **-25.0%** (Latency Reduction) |
 | **Chunks Retained** | `5.00 chunks` | `1.93 chunks` | `3.07 chunks removed` |
 
-> **Engineering Finding**: Pruning low-similarity context chunks yields a **58.07% Input Token Reduction** (594.5 → 249.3 tokens), a **59.81% Context Reduction**, and a **25.04% Latency Reduction** (102.07 ms → 76.52 ms). However, filtering lower-ranked context chunks causes Recall@5 to drop from **94.38%** to **78.75%** (-15.63%). This illustrates an **engineering trade-off** between context efficiency and retrieval recall.
+> **Engineering Finding**: Pruning low-similarity context chunks yields a **58.1% Input Token Reduction** (594.5 → 249.3 tokens), a **59.8% Context Reduction**, and a **25.0% Latency Reduction** (102.07 ms → 76.52 ms). However, filtering lower-ranked context chunks causes Recall@5 to drop from **94.38%** to **78.75%** (-15.63% / -0.15625 delta). This illustrates an **engineering trade-off** between context efficiency and retrieval recall.
 
 ---
 
@@ -174,11 +176,12 @@ The Security Console audits retrieved context chunks before generation to detect
 
 ## 7. Explicit Project Limitations
 
-1. **Deterministic Fallback Generation Engine**: The current pipeline uses a deterministic `FallbackGenerator` (context sentence extraction) rather than a paid cloud LLM API (e.g. OpenAI GPT-4). Grounding and benchmark scores reflect local fallback capabilities.
-2. **Heuristic Grounding Verification**: Grounding checks rely on lexical n-gram overlap and embedding similarity rather than full formal semantic verification.
-3. **Estimated Token Usage**: Token counts are estimated using character/word heuristics (`CHARS_PER_TOKEN = 4.0`), not model-specific byte-pair tokenizers.
+1. **Deterministic Fallback Generation Engine**: Generation currently uses a deterministic `FallbackGenerator` (context sentence extraction) rather than a paid/external LLM API (e.g. OpenAI GPT-4). Grounding and benchmark scores reflect local fallback capabilities.
+2. **Heuristic Grounding Verification**: Grounding is heuristic/embedding-based (lexical n-gram overlap and sentence embedding distance), not a formal truth verifier or LLM reasoning judge.
+3. **Estimated Token Usage**: Token counts are estimated using character/word heuristics (`CHARS_PER_TOKEN = 4.0`), rather than actual provider byte-pair tokenizers.
 4. **Local Hardware Latency**: Latencies are measured on local host CPU hardware and do not represent cloud network or LLM generation latencies.
-5. **Benchmark Scope**: The benchmark suite contains 40 curated questions evaluated against reference reference text files in `data/`.
+5. **Deterministic Security Scanner**: Security detection is a deterministic pattern scanner, not a production security firewall.
+6. **Benchmark Scope**: Benchmark size and corpus limitations are explicitly documented (40 curated questions evaluated against reference text files in `data/`).
 
 ---
 

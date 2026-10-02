@@ -13,7 +13,7 @@ from backend.diagnostics.efficiency_diagnostics import EfficiencyDiagnosticsEngi
 
 def print_full_debug_report(query: str, retrieval_report: RetrievalDiagnosticResult, answer: str, model_name: str, grounding_report: GroundingDiagnosticResult, efficiency_report: EfficiencyDiagnosticResult):
     print("=" * 50)
-    print("RAG DEBUGGER")
+    print("NOOKBASE")
     print("=" * 12)
     print(f"\nQUERY:\n{query}")
     
@@ -85,7 +85,7 @@ def print_full_debug_report(query: str, retrieval_report: RetrievalDiagnosticRes
     print("\n" + "-" * 50)
 
 def main():
-    print("--- RAG DEBUG PIPELINE ---")
+    print("--- NOOKBASE DEBUG PIPELINE ---")
     
     # 1. Setup Data
     data_dir = "./data"
@@ -95,7 +95,7 @@ def main():
     if not os.path.exists(sample_doc_path):
         print(f"Creating sample document at {sample_doc_path}...")
         with open(sample_doc_path, "w", encoding="utf-8") as f:
-            f.write("RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation pipelines.\n")
+            f.write("NookBase is a tool for developers to inspect Retrieval-Augmented Generation pipelines.\n")
             f.write("It provides insights into retrieved contexts, vector similarities, and potential grounding failures.\n")
             f.write("A typical RAG pipeline consists of document ingestion, text extraction, chunking, embedding generation, vector storage, and similarity retrieval.\n")
             f.write("SentenceTransformers is often used for generating lightweight dense embeddings.\n")

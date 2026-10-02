@@ -1,11 +1,11 @@
-# RAG Debugger — Technical Interview Guide
+# NookBase — Technical Interview Guide
 
-This guide provides technical explanations for 20 common architecture, evaluation, and security questions about the **RAG Debugger** project.
+This guide provides technical explanations for 20 common architecture, evaluation, and security questions about the **NookBase** project.
 
 ---
 
-### 1. Why did you build a RAG debugger?
-**Answer**: Most RAG applications operate as black boxes. When an LLM produces a wrong answer, developers struggle to determine whether the vector retriever failed, the context window was flooded with noise, the LLM hallucinated, or an untrusted document injected malicious instructions. I built RAG Debugger to make every stage of the RAG pipeline observable, measurable, and testable.
+### 1. Why did you build NookBase?
+**Answer**: Most RAG applications operate as black boxes. When an LLM produces a wrong answer, developers struggle to determine whether the vector retriever failed, the context window was flooded with noise, the LLM hallucinated, or an untrusted document injected malicious instructions. I built NookBase to make every stage of the RAG pipeline observable, measurable, and testable.
 
 ### 2. What problem does it solve?
 **Answer**: It solves the problem of silent, opaque failures in RAG systems. It provides real-time retrieval scoring, claim-level grounding diagnostics, latency/token efficiency analysis, Basic vs Optimized context experiments, and prompt-injection security detection in a single developer dashboard.

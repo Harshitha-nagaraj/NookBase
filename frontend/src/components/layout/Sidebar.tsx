@@ -37,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <Cpu className="w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-xs tracking-tight text-slate-900 leading-none">RAG Debugger</span>
+              <span className="font-bold text-xs tracking-tight text-slate-900 leading-none">NookBase</span>
               <span className="text-[10px] text-slate-400 font-mono mt-0.5">Observability Workstation</span>
             </div>
           </div>

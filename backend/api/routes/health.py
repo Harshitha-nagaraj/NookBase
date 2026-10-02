@@ -11,6 +11,6 @@ async def get_health():
     """
     return HealthResponse(
         status="ok",
-        service="RAG Debugger API",
+        service="NookBase API",
         version="1.0"
     )

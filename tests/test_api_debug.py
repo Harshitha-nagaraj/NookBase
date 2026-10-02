@@ -45,7 +45,7 @@ def test_debug_compare_endpoint():
     assert "chunks_removed" in data["optimization"]
 
 def test_main_debug_endpoint():
-    response = client.post("/api/debug", json={"query": "What is RAG Debugger?", "top_k": 2})
+    response = client.post("/api/debug", json={"query": "What is NookBase?", "top_k": 2})
     assert response.status_code == 200
     data = response.json()
     assert "retrieval" in data

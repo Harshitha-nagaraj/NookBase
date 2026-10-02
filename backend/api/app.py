@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.routes import health, documents, debug, evaluation, experiments, history
 
 app = FastAPI(
-    title="RAG Debugger API",
+    title="NookBase API",
     description="REST API for RAG diagnostic and evaluation tools",
     version="1.0"
 )

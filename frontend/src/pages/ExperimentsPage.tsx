@@ -7,7 +7,7 @@ import type { OptimizationExperimentResponse, CompareResponse } from '../types/a
 export const ExperimentsPage: React.FC = () => {
   const [expData, setExpData] = useState<OptimizationExperimentResponse | null>(null);
   const [compareData, setCompareData] = useState<CompareResponse | null>(null);
-  const [testQuery, setTestQuery] = useState('What database is used for local storage in RAG Debugger?');
+  const [testQuery, setTestQuery] = useState('What database is used for local storage in NookBase?');
   const [isComparing, setIsComparing] = useState(false);
 
   useEffect(() => {

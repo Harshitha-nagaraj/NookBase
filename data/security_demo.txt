@@ -1,7 +1,7 @@
-RAG Debugger Security Test Documentation
+NookBase Security Test Documentation
 
 Section 1: Architecture Overview
-The RAG Debugger provides comprehensive observability into retrieval-augmented generation pipelines.
+NookBase provides comprehensive observability into retrieval-augmented generation pipelines.
 It tracks document ingestion, chunking, vector embeddings in ChromaDB, distance scoring, context selection, and LLM generation.
 Developers can inspect precision, recall, groundedness, and context token efficiency.
 

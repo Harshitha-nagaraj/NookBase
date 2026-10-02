@@ -1,9 +1,9 @@
-# RAG Debugger Benchmark Report
+# NookBase Benchmark Report
 
 *Generated on 2026-10-01 11:36:13*
 
 ## 1. Benchmark Purpose
-The purpose of this benchmark suite is to scientifically evaluate the retrieval performance, context optimization trade-offs, heuristic grounding accuracy, efficiency metrics, and out-of-domain (OOD) refusal capabilities of the RAG Debugger pipeline.
+The purpose of this benchmark suite is to scientifically evaluate the retrieval performance, context optimization trade-offs, heuristic grounding accuracy, efficiency metrics, and out-of-domain (OOD) refusal capabilities of the NookBase pipeline.
 
 ## 2. Dataset Composition
 * **Total Questions**: 40
@@ -106,7 +106,7 @@ Comparison of Basic RAG (unfiltered Top-5 context) against Context-Optimized RAG
 | Question ID | Question | Expected Source | Retrieved Source(s) | Diagnostic Classification |
 |---|---|---|---|---|
 | `q032` | What is quantum computing? | `None (OOD)` | `quantum_test.txt, sample_document.txt, security_demo.txt` | Out-of-domain query received non-refusal answer |
-| `q034` | Who wrote the RAG Debugger codebase? | `None (OOD)` | `security_demo.txt, sample_document.txt, quantum_test.txt` | Out-of-domain query received non-refusal answer |
+| `q034` | Who wrote the NookBase codebase? | `None (OOD)` | `security_demo.txt, sample_document.txt, quantum_test.txt` | Out-of-domain query received non-refusal answer |
 | `q035` | When was the James Webb Space Telescope launched? | `None (OOD)` | `test_apollo.txt, security_demo.txt, quantum_test.txt` | Out-of-domain query received non-refusal answer |
 
 ## 12. Methodological Limitations

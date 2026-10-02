@@ -12,7 +12,7 @@ export const TopNav: React.FC<TopNavProps> = ({ apiStatus }) => {
         <div className="flex items-center gap-2.5">
           <span className="font-bold text-sm text-[#F1EDE4] tracking-tight font-sans flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C96B3C] shadow-[0_0_8px_rgba(201,107,60,0.6)]"></span>
-            RAG Debugger
+            NookBase
           </span>
           <span className="text-[11px] text-[#A9A59B] hidden sm:inline-block border-l border-[#34342D] pl-2.5 font-sans">
             Observability & Trace

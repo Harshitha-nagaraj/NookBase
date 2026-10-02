@@ -6,7 +6,7 @@ def detector():
     return PromptInjectionDetector()
 
 def test_1_clean_document(detector):
-    text = "The RAG Debugger provides comprehensive observability into retrieval pipelines."
+    text = "NookBase provides comprehensive observability into retrieval pipelines."
     res = detector.analyze_chunk(text, chunk_id="chunk_1", source="docs.txt")
     assert res["is_suspicious"] is False
     assert res["risk_level"] == "NONE"

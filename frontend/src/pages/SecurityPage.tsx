@@ -6,7 +6,7 @@ import type { SecurityResponse } from '../types/api';
 export const SecurityPage: React.FC = () => {
   const [data, setData] = useState<SecurityResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [scanQuery, setScanQuery] = useState('What database is used for local storage in RAG Debugger?');
+  const [scanQuery, setScanQuery] = useState('What database is used for local storage in NookBase?');
 
   const runSecurityScan = async (query: string) => {
     setIsLoading(true);
@@ -46,7 +46,7 @@ export const SecurityPage: React.FC = () => {
           detection: 'No override tokens detected',
           risk: 'CLEAN',
           status: 'CLEAN',
-          snippet: 'RAG Debugger is a tool for developers to inspect Retrieval-Augmented Generation...',
+          snippet: 'NookBase is a tool for developers to inspect Retrieval-Augmented Generation...',
         },
         {
           scenario: 'Hidden Instruction Exfiltration Test',

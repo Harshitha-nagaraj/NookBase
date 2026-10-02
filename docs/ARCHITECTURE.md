@@ -1,6 +1,6 @@
-# RAG Debugger — System Architecture
+# NookBase — System Architecture
 
-This document details the internal architecture, dataflow, and design decisions of the **RAG Debugger** platform.
+This document details the internal architecture, dataflow, and design decisions of the **NookBase** platform.
 
 ```text
                                +-----------------------------+
