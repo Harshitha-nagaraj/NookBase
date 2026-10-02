@@ -239,7 +239,7 @@ export const ExperimentsPage: React.FC = () => {
         </form>
 
         {compareData && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 min-w-0">
             <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-[6px] space-y-2">
               <div className="flex items-center justify-between font-mono text-xs border-b border-slate-200 pb-1.5">
                 <span className="font-bold text-slate-700">BASIC PIPELINE</span>

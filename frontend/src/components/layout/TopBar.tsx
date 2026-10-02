@@ -62,7 +62,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const meta = getHeaderMeta(activeTab);
 
   return (
-    <header className="lg:ml-[240px] fixed top-0 right-0 left-0 h-13 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between z-20 font-sans shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+    <header className="fixed top-0 right-0 left-0 lg:left-[240px] h-13 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between z-20 font-sans shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
       {/* Title, Hamburger Menu & Contextual Description */}
       <div className="flex items-center gap-2.5 sm:gap-3">
         {onMenuToggle && (

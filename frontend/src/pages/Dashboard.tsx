@@ -95,8 +95,7 @@ export const Dashboard: React.FC = () => {
         onMenuToggle={() => setIsMobileMenuOpen((prev) => !prev)}
       />
 
-      {/* Main Page Workspace Container */}
-      <main className="lg:ml-[240px] pt-16 px-3 sm:px-6 lg:px-8 max-w-[1440px] mx-auto min-h-[calc(100vh-4rem)] w-full overflow-x-hidden">
+      <main className="lg:ml-[240px] pt-16 px-3 sm:px-6 lg:px-8 max-w-[1440px] min-h-[calc(100vh-4rem)]">
         {activeTab === 'analyze' && (
           <AnalyzePage
             data={data}

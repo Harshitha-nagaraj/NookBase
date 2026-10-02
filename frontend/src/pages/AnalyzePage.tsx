@@ -204,10 +204,11 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
         {/* Controls Grid */}
         <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3 pt-1 border-t border-slate-100">
           {/* Strategy Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase mr-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase sm:mr-1 text-center sm:text-left">
               Strategy:
             </span>
+            <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
             {[
               { id: 'standard', label: 'Standard', fullLabel: 'Standard Retrieval', icon: <Layers className="w-3.5 h-3.5" /> },
               { id: 'filtered', label: 'Filtered', fullLabel: 'Filtered Retrieval', icon: <Filter className="w-3.5 h-3.5" /> },
@@ -232,11 +233,12 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
                 </button>
               );
             })}
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Top-K & Threshold inputs */}
-            <div className="flex items-center gap-4 text-xs font-mono">
+            <div className="flex flex-row justify-center sm:justify-start items-center gap-4 text-xs font-mono">
               <div className="flex items-center gap-1.5">
                 <label htmlFor="top-k-input" className="text-slate-600 font-medium text-[11px]">Top-K:</label>
                 <input
@@ -603,7 +605,7 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
       {/* GENERATED ANSWER & DIAGNOSTIC PANEL */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
         {/* Left 7 Columns: Answer & Grounding Analysis */}
-        <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6 min-w-0">
           {/* Generated Answer Panel */}
           <div className="dev-card space-y-2">
             <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
@@ -788,7 +790,7 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
         </div>
 
         {/* Right 5 Columns: Diagnostic Root Cause & Efficiency Telemetry */}
-        <div className="lg:col-span-5 space-y-4 sm:space-y-6">
+        <div className="lg:col-span-5 space-y-4 sm:space-y-6 min-w-0">
           {/* Diagnostic Panel */}
           <div className="dev-card space-y-3">
             <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
