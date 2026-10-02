@@ -1,10 +1,22 @@
 import axios from 'axios';
 
 const getBaseUrl = (): string => {
-  if (import.meta.env.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL;
+  const rawUrl = import.meta.env.VITE_API_BASE_URL;
+  let url = (rawUrl && typeof rawUrl === 'string' && rawUrl.trim() !== '') 
+    ? rawUrl.trim() 
+    : 'http://127.0.0.1:8000';
+
+  // Strip trailing slashes
+  url = url.replace(/\/+$/, '');
+
+  // Fix malformed protocol schemes like "https//", "https:/", "http//", "http:/"
+  if (/^https?:?\/*/i.test(url)) {
+    url = url.replace(/^(https?):?\/*/i, '$1://');
+  } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
   }
-  return 'http://127.0.0.1:8000';
+
+  return url;
 };
 
 export const apiClient = axios.create({
