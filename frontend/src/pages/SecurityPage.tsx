@@ -63,7 +63,7 @@ export const SecurityPage: React.FC = () => {
   return (
     <div className="space-y-6 text-slate-900 font-sans pb-12">
       {/* Header */}
-      <div className="dev-card flex flex-wrap items-center justify-between gap-4">
+      <div className="dev-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold tracking-tight text-slate-900">
@@ -90,20 +90,20 @@ export const SecurityPage: React.FC = () => {
       </div>
 
       {/* Query Scanner Input Bar */}
-      <form onSubmit={handleScanSubmit} className="flex gap-2">
+      <form onSubmit={handleScanSubmit} className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
           <input
             type="text"
             value={scanQuery}
             onChange={(e) => setScanQuery(e.target.value)}
             placeholder="Type a query to run security inspection scanner..."
-            className="dev-input w-full pl-3 font-sans"
+            className="dev-input w-full pl-3 font-sans min-h-[36px]"
           />
         </div>
         <button
           type="submit"
           disabled={isLoading}
-          className="btn-primary"
+          className="btn-primary min-h-[36px]"
         >
           <Search className="w-3.5 h-3.5" />
           <span>{isLoading ? 'Scanning...' : 'Scan Query'}</span>
@@ -111,7 +111,7 @@ export const SecurityPage: React.FC = () => {
       </form>
 
       {/* Security Overview Telemetry Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 font-mono text-xs">
         <div className="dev-card bg-white space-y-1">
           <div className="text-[10px] text-slate-400 uppercase font-semibold">RISK ASSESSMENT</div>
           <div className={`text-base font-bold ${
@@ -150,7 +150,7 @@ export const SecurityPage: React.FC = () => {
 
       {/* Security Console Table */}
       <div className="dev-card space-y-3">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
             <ShieldCheck className="w-3.5 h-3.5 text-[#00288e]" />
             <span>CHUNK SAFETY SCAN RESULTS</span>
@@ -158,8 +158,8 @@ export const SecurityPage: React.FC = () => {
           <span className="text-xs font-mono text-slate-400">Context Rule Inspection</span>
         </div>
 
-        <div className="border border-slate-200 rounded-[6px] overflow-hidden bg-white">
-          <table className="dev-table">
+        <div className="border border-slate-200 rounded-[6px] overflow-x-auto bg-white w-full">
+          <table className="dev-table min-w-[600px] sm:min-w-full">
             <thead>
               <tr>
                 <th>Scenario / Rule</th>

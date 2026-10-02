@@ -15,6 +15,7 @@ import type { DebugResponse } from '../types/api';
 
 export const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('analyze');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'offline'>('checking');
   const [data, setData] = useState<DebugResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,14 +73,16 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf4] text-zinc-900 font-sans">
-      {/* Fixed Sidebar (~240px wide) */}
+    <div className="min-h-screen bg-[#fafaf4] text-slate-900 font-sans overflow-x-hidden">
+      {/* Sidebar (~240px wide desktop, responsive drawer on mobile/tablet) */}
       <Sidebar
         activeTab={activeTab}
         onTabChange={setActiveTab}
         apiStatus={apiStatus}
         documentCount={documentCount}
         chunkCount={chunkCount}
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Fixed Top Bar */}
@@ -89,10 +92,11 @@ export const Dashboard: React.FC = () => {
         latencyMs={data?.efficiency.total_latency_ms ?? 37.2}
         apiStatus={apiStatus}
         onRefresh={handleRefresh}
+        onMenuToggle={() => setIsMobileMenuOpen((prev) => !prev)}
       />
 
       {/* Main Page Workspace Container */}
-      <main className="ml-[240px] pt-16 px-8 max-w-[1440px] mx-auto min-h-[calc(100vh-4rem)]">
+      <main className="lg:ml-[240px] pt-16 px-3 sm:px-6 lg:px-8 max-w-[1440px] mx-auto min-h-[calc(100vh-4rem)] w-full overflow-x-hidden">
         {activeTab === 'analyze' && (
           <AnalyzePage
             data={data}

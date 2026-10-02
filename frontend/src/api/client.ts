@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const getBaseUrl = (): string => {
-  const rawUrl = import.meta.env.VITE_API_BASE_URL;
+export const normalizeApiBaseUrl = (rawUrl?: string): string => {
   let url = (rawUrl && typeof rawUrl === 'string' && rawUrl.trim() !== '') 
     ? rawUrl.trim() 
     : 'http://127.0.0.1:8000';
@@ -9,14 +8,21 @@ const getBaseUrl = (): string => {
   // Strip trailing slashes
   url = url.replace(/\/+$/, '');
 
+  // Strip trailing /api if present in base URL to avoid /api/api duplication
+  url = url.replace(/\/api$/i, '');
+
   // Fix malformed protocol schemes like "https//", "https:/", "http//", "http:/"
   if (/^https?:?\/*/i.test(url)) {
     url = url.replace(/^(https?):?\/*/i, '$1://');
-  } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+  } else {
     url = `https://${url}`;
   }
 
-  return url;
+  return url.replace(/\/+$/, '');
+};
+
+const getBaseUrl = (): string => {
+  return normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 };
 
 export const apiClient = axios.create({
@@ -27,6 +33,9 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
+  if (config.baseURL) {
+    config.baseURL = normalizeApiBaseUrl(config.baseURL);
+  }
   console.log('[RAG DEBUG] API request:', {
     baseURL: config.baseURL,
     url: config.url,

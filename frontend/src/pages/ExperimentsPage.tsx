@@ -51,7 +51,7 @@ export const ExperimentsPage: React.FC = () => {
   return (
     <div className="space-y-6 text-slate-900 font-sans pb-12">
       {/* Header */}
-      <div className="dev-card flex flex-wrap items-center justify-between gap-4">
+      <div className="dev-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold tracking-tight text-slate-900">
@@ -122,8 +122,8 @@ export const ExperimentsPage: React.FC = () => {
           STRATEGY COMPARISON MATRIX
         </h2>
 
-        <div className="border border-slate-200 rounded-[6px] overflow-hidden bg-white">
-          <table className="dev-table font-mono">
+        <div className="border border-slate-200 rounded-[6px] overflow-x-auto bg-white w-full">
+          <table className="dev-table font-mono min-w-[550px] sm:min-w-full">
             <thead>
               <tr>
                 <th>Metric / Dimension</th>
@@ -203,7 +203,7 @@ export const ExperimentsPage: React.FC = () => {
             </strong>{' '}
             (Recall delta: {expData ? `${recallDelta >= 0 ? '+' : ''}${recallDelta.toFixed(2)}` : '...'}) across the benchmark evaluation dataset.
           </p>
-          <div className="p-3 bg-amber-50 border border-amber-200 rounded-[5px] font-mono text-xs text-amber-900 flex items-center justify-between">
+          <div className="p-3 bg-amber-50 border border-amber-200 rounded-[5px] font-mono text-xs text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
             <span>Recall Trade-off Vector:</span>
             <span className="font-bold">
               {expData ? `${basicR5.toFixed(2)} → ${optR5.toFixed(2)} (${recallDelta >= 0 ? '+' : ''}${recallDelta.toFixed(2)})` : '...'}
@@ -214,25 +214,25 @@ export const ExperimentsPage: React.FC = () => {
 
       {/* SINGLE QUERY DIFFERENTIAL */}
       <div className="dev-card space-y-3 font-sans">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900">
             LIVE SINGLE-QUERY DIFFERENTIAL TESTER
           </h2>
           <span className="text-xs text-slate-400 font-mono">Real-time side-by-side run</span>
         </div>
 
-        <form onSubmit={handleRunCompare} className="flex gap-2">
+        <form onSubmit={handleRunCompare} className="flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={testQuery}
             onChange={(e) => setTestQuery(e.target.value)}
             placeholder="Type a test query to run differential execution..."
-            className="dev-input flex-1"
+            className="dev-input flex-1 min-h-[36px]"
           />
           <button
             type="submit"
             disabled={isComparing}
-            className="btn-primary font-mono text-xs"
+            className="btn-primary font-mono text-xs min-h-[36px]"
           >
             {isComparing ? 'Executing...' : 'Run Differential'}
           </button>

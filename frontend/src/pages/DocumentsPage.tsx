@@ -62,7 +62,7 @@ export const DocumentsPage: React.FC<DocumentsPageProps> = ({ onDocumentUploaded
   return (
     <div className="space-y-6 text-slate-900 font-sans pb-12">
       {/* Header */}
-      <div className="dev-card flex flex-wrap items-center justify-between gap-4">
+      <div className="dev-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold tracking-tight text-slate-900">
@@ -140,47 +140,49 @@ export const DocumentsPage: React.FC<DocumentsPageProps> = ({ onDocumentUploaded
       )}
 
       {/* Technical Document Management Table */}
-      <div className="dev-card p-0 overflow-hidden bg-white">
-        <table className="dev-table">
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th className="w-32">Type</th>
-              <th className="w-28 text-right">Chunks</th>
-              <th className="w-44">Indexed Date</th>
-              <th className="w-28 text-right">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {docs.length > 0 ? (
-              docs.map((doc) => {
-                const ext = doc.filename.split('.').pop()?.toUpperCase() || 'TXT';
-                return (
-                  <tr key={doc.document_id}>
-                    <td className="font-medium text-slate-900 flex items-center gap-2">
-                      <FileText className="w-3.5 h-3.5 text-[#00288e] shrink-0" />
-                      <span className="font-mono text-xs">{doc.filename}</span>
-                    </td>
-                    <td className="font-mono text-slate-500 text-[11px]">{ext} FILE</td>
-                    <td className="text-right font-mono text-slate-800 font-bold">
-                      {doc.chunk_count}
-                    </td>
-                    <td className="font-mono text-slate-500 text-[11px]">2026-09-26 19:40</td>
-                    <td className="text-right">
-                      <span className="badge-status badge-good">INDEXED</span>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+      <div className="dev-card p-0 overflow-hidden bg-white w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="dev-table min-w-[550px] sm:min-w-full">
+            <thead>
               <tr>
-                <td colSpan={5} className="text-center py-8 text-slate-400 font-mono text-xs">
-                  {isLoading ? 'Loading document index...' : 'No documents indexed yet. Upload a document to populate vector store.'}
-                </td>
+                <th>Filename</th>
+                <th className="w-32">Type</th>
+                <th className="w-28 text-right">Chunks</th>
+                <th className="w-44">Indexed Date</th>
+                <th className="w-28 text-right">Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {docs.length > 0 ? (
+                docs.map((doc) => {
+                  const ext = doc.filename.split('.').pop()?.toUpperCase() || 'TXT';
+                  return (
+                    <tr key={doc.document_id}>
+                      <td className="font-medium text-slate-900 flex items-center gap-2">
+                        <FileText className="w-3.5 h-3.5 text-[#00288e] shrink-0" />
+                        <span className="font-mono text-xs">{doc.filename}</span>
+                      </td>
+                      <td className="font-mono text-slate-500 text-[11px]">{ext} FILE</td>
+                      <td className="text-right font-mono text-slate-800 font-bold">
+                        {doc.chunk_count}
+                      </td>
+                      <td className="font-mono text-slate-500 text-[11px]">2026-09-26 19:40</td>
+                      <td className="text-right">
+                        <span className="badge-status badge-good">INDEXED</span>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5} className="text-center py-8 text-slate-400 font-mono text-xs">
+                    {isLoading ? 'Loading document index...' : 'No documents indexed yet. Upload a document to populate vector store.'}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

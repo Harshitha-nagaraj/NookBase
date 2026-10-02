@@ -15,7 +15,7 @@ export const EvaluationPage: React.FC = () => {
   return (
     <div className="space-y-6 text-slate-900 font-sans pb-12">
       {/* Page Header */}
-      <div className="dev-card flex flex-wrap items-center justify-between gap-4">
+      <div className="dev-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold text-slate-900 tracking-tight">
@@ -36,7 +36,7 @@ export const EvaluationPage: React.FC = () => {
       </div>
 
       {/* BENCHMARK SUMMARY SECTION */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 font-mono text-xs">
         <div className="dev-card bg-white space-y-1">
           <div className="text-[10px] text-slate-400 uppercase font-semibold">TOTAL BENCHMARK QUESTIONS</div>
           <div className="text-lg font-bold text-slate-900">
@@ -72,7 +72,7 @@ export const EvaluationPage: React.FC = () => {
 
       {/* PRECISION & RECALL BENCHMARK TABLE */}
       <div className="dev-card space-y-3">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
             <BarChart2 className="w-3.5 h-3.5 text-[#00288e]" />
             <span>RETRIEVAL ACCURACY BENCHMARK (PRECISION & RECALL)</span>
@@ -80,8 +80,8 @@ export const EvaluationPage: React.FC = () => {
           <span className="text-xs font-mono text-slate-400">Cutoff K Evaluation</span>
         </div>
 
-        <div className="border border-slate-200 rounded-[6px] overflow-hidden bg-white">
-          <table className="dev-table font-mono">
+        <div className="border border-slate-200 rounded-[6px] overflow-x-auto bg-white w-full">
+          <table className="dev-table font-mono min-w-[500px] sm:min-w-full">
             <thead>
               <tr>
                 <th className="w-24">Cutoff (K)</th>

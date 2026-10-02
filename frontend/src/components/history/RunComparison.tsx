@@ -111,11 +111,11 @@ export const RunComparison: React.FC<RunComparisonProps> = ({ run1, run2, onBack
   return (
     <div className="space-y-4 font-sans pb-8">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-200 pb-3">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 transition-colors min-h-[34px]"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-zinc-500" />
             <span>Back to History</span>
@@ -161,11 +161,11 @@ export const RunComparison: React.FC<RunComparisonProps> = ({ run1, run2, onBack
       </div>
 
       {/* Technical Metrics Comparison Table */}
-      <div className="bg-white rounded border border-zinc-200 overflow-hidden">
+      <div className="bg-white rounded border border-zinc-200 overflow-x-auto w-full">
         <div className="px-4 py-2.5 bg-zinc-50 border-b border-zinc-200 font-mono text-xs font-bold text-zinc-800 uppercase tracking-wider">
           Technical Metrics Comparison
         </div>
-        <table className="w-full text-left border-collapse font-sans text-xs">
+        <table className="w-full text-left border-collapse font-sans text-xs min-w-[500px] sm:min-w-full">
           <thead>
             <tr className="bg-zinc-50/50 border-b border-zinc-200 font-mono text-[11px] uppercase text-zinc-500">
               <th className="py-2 px-4 font-semibold">Metric</th>

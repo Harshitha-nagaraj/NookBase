@@ -17,11 +17,11 @@ export const RunInspector: React.FC<RunInspectorProps> = ({ run, onBack }) => {
   return (
     <div className="space-y-4 font-sans pb-8">
       {/* Top Header & Back Button */}
-      <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-200 pb-3">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 transition-colors min-h-[34px]"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-zinc-500" />
             <span>Back to History</span>
@@ -37,7 +37,7 @@ export const RunInspector: React.FC<RunInspectorProps> = ({ run, onBack }) => {
           </div>
         </div>
 
-        <div className="text-right font-mono text-xs text-zinc-600">
+        <div className="text-left sm:text-right font-mono text-xs text-zinc-600">
           <div>Strategy: <span className="font-bold text-[#00288e] uppercase">{run.strategy || 'standard'}</span></div>
           <div>Top-K: <span className="font-semibold text-zinc-900">{run.top_k}</span> · Thresh: <span className="font-semibold text-zinc-900">{run.threshold ?? 0.35}</span></div>
           <div>Total Latency: <span className="font-semibold text-zinc-900">{run.total_latency_ms?.toFixed(1)} ms</span></div>
@@ -57,34 +57,34 @@ export const RunInspector: React.FC<RunInspectorProps> = ({ run, onBack }) => {
         <div className="text-[10px] font-mono font-semibold uppercase text-zinc-400 tracking-wider mb-2">
           PIPELINE EXECUTION TRACE
         </div>
-        <div className="flex items-center justify-between gap-1 overflow-x-auto text-xs font-mono">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+        <div className="flex items-center gap-1.5 overflow-x-auto text-xs font-mono pb-1">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-semibold text-zinc-800">Query</span>
           </div>
-          <span className="text-zinc-400">→</span>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+          <span className="text-zinc-400 shrink-0">→</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-semibold text-zinc-800">Embedding</span>
           </div>
-          <span className="text-zinc-400">→</span>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+          <span className="text-zinc-400 shrink-0">→</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-semibold text-zinc-800">Retrieval</span>
             <span className="text-[10px] text-zinc-400">({run.strategy || 'std'} · {run.retrieved_chunks?.length || 0} chunks)</span>
           </div>
-          <span className="text-zinc-400">→</span>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+          <span className="text-zinc-400 shrink-0">→</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-semibold text-zinc-800">Context</span>
           </div>
-          <span className="text-zinc-400">→</span>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+          <span className="text-zinc-400 shrink-0">→</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-semibold text-zinc-800">Generation</span>
           </div>
-          <span className="text-zinc-400">→</span>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200">
+          <span className="text-zinc-400 shrink-0">→</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded border border-zinc-200 shrink-0">
             <span className={`w-2 h-2 rounded-full ${run.grounding_status?.toUpperCase().includes('UNGROUNDED') ? 'bg-red-500' : 'bg-emerald-500'}`} />
             <span className="font-semibold text-zinc-800">Grounding</span>
             <span className="text-[10px] text-zinc-400">({run.grounding_status})</span>
@@ -93,7 +93,7 @@ export const RunInspector: React.FC<RunInspectorProps> = ({ run, onBack }) => {
       </div>
 
       {/* Tabs Bar */}
-      <div className="flex border-b border-zinc-200 font-mono text-xs">
+      <div className="flex overflow-x-auto border-b border-zinc-200 font-mono text-xs w-full">
         {[
           { id: 'overview', label: 'Overview' },
           { id: 'retrieval', label: `Retrieval (${run.retrieved_chunks?.length || 0})` },
@@ -104,9 +104,9 @@ export const RunInspector: React.FC<RunInspectorProps> = ({ run, onBack }) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${
+            className={`px-3 sm:px-4 py-2 font-medium border-b-2 transition-colors whitespace-nowrap min-h-[36px] ${
               activeTab === tab.id
-                ? 'border-[#00288e] text-[#00288e] bg-blue-50/40'
+                ? 'border-[#00288e] text-[#00288e] bg-blue-50/40 font-semibold'
                 : 'border-transparent text-zinc-500 hover:text-zinc-800 hover:border-zinc-300'
             }`}
           >
