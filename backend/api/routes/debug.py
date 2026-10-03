@@ -63,61 +63,68 @@ from backend.evaluation.metrics import EvaluationMetrics
 from backend.security.prompt_injection import PromptInjectionDetector
 
 from backend.history.service import RunHistoryService
+import threading
 
 router = APIRouter()
 
 _embedding_service = None
 _components = None
 _history_service = None
+_history_lock = threading.Lock()
+_components_lock = threading.Lock()
 
 def get_history_service():
     global _history_service
     if _history_service is None:
-        _history_service = RunHistoryService()
+        with _history_lock:
+            if _history_service is None:
+                _history_service = RunHistoryService()
     return _history_service
 
 def get_components():
     global _components, _embedding_service
     if _components is None:
-        _embedding_service = EmbeddingService()
-        vector_store = VectorStore()
-        retriever = Retriever(_embedding_service, vector_store)
-        retrieval_diagnostics = DiagnosticsEngine()
-        context_builder = ContextBuilder()
-        generator = FallbackGenerator()
-        grounding_diagnostics = GroundingDiagnosticsEngine(_embedding_service)
-        efficiency_diagnostics = EfficiencyDiagnosticsEngine()
-        metrics = EvaluationMetrics(_embedding_service)
-        optimizer = ContextOptimizer()
-        security_detector = PromptInjectionDetector()
-        history_svc = get_history_service()
-        
-        pipelines = OptimizationPipelines(
-            retriever, context_builder, generator, grounding_diagnostics,
-            efficiency_diagnostics, retrieval_diagnostics, metrics, optimizer
-        )
+        with _components_lock:
+            if _components is None:
+                _embedding_service = EmbeddingService()
+                vector_store = VectorStore()
+                retriever = Retriever(_embedding_service, vector_store)
+                retrieval_diagnostics = DiagnosticsEngine()
+                context_builder = ContextBuilder()
+                generator = FallbackGenerator()
+                grounding_diagnostics = GroundingDiagnosticsEngine(_embedding_service)
+                efficiency_diagnostics = EfficiencyDiagnosticsEngine()
+                metrics = EvaluationMetrics(_embedding_service)
+                optimizer = ContextOptimizer()
+                security_detector = PromptInjectionDetector()
+                history_svc = get_history_service()
+                
+                pipelines = OptimizationPipelines(
+                    retriever, context_builder, generator, grounding_diagnostics,
+                    efficiency_diagnostics, retrieval_diagnostics, metrics, optimizer
+                )
 
-        counterfactual_engine = CounterfactualEngine(
-            retriever, retrieval_diagnostics, context_builder, generator,
-            grounding_diagnostics, efficiency_diagnostics, history_service=history_svc
-        )
-        
-        root_cause_engine = RootCauseEngine()
-        
-        ensure_demo_data_ingested(vector_store, _embedding_service)
+                counterfactual_engine = CounterfactualEngine(
+                    retriever, retrieval_diagnostics, context_builder, generator,
+                    grounding_diagnostics, efficiency_diagnostics, history_service=history_svc
+                )
+                
+                root_cause_engine = RootCauseEngine()
+                
+                ensure_demo_data_ingested(vector_store, _embedding_service)
 
-        _components = {
-            "retriever": retriever,
-            "retrieval_diagnostics": retrieval_diagnostics,
-            "context_builder": context_builder,
-            "generator": generator,
-            "grounding_diagnostics": grounding_diagnostics,
-            "efficiency_diagnostics": efficiency_diagnostics,
-            "security_detector": security_detector,
-            "pipelines": pipelines,
-            "counterfactual_engine": counterfactual_engine,
-            "root_cause_engine": root_cause_engine
-        }
+                _components = {
+                    "retriever": retriever,
+                    "retrieval_diagnostics": retrieval_diagnostics,
+                    "context_builder": context_builder,
+                    "generator": generator,
+                    "grounding_diagnostics": grounding_diagnostics,
+                    "efficiency_diagnostics": efficiency_diagnostics,
+                    "security_detector": security_detector,
+                    "pipelines": pipelines,
+                    "counterfactual_engine": counterfactual_engine,
+                    "root_cause_engine": root_cause_engine
+                }
     return _components
 
 def ensure_demo_data_ingested(vector_store, embedding_service):
@@ -207,10 +214,12 @@ def validate_debug_request(req: DebugRequest):
 @router.post("", response_model=DebugResponse)
 async def debug_pipeline(req: DebugRequest):
     validate_debug_request(req)
-        
-    comps = get_components()
-    
+    import logging
+    logger = logging.getLogger(__name__)
+
     try:
+        logger.info(f"Initializing components for debug query: {req.query[:20]}")
+        comps = get_components()
         t0_total = time.perf_counter()
         
         t0_ret = time.perf_counter()

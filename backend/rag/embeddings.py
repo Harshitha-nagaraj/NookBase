@@ -1,13 +1,27 @@
+import os
+import threading
+
+# Constrain PyTorch thread usage to prevent excessive memory and CPU overhead on Render Free Tier
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+
 from typing import List, Optional
 from sentence_transformers import SentenceTransformer
+import torch
+
+torch.set_num_threads(1)
+
 from backend.config import EMBEDDING_MODEL_NAME
 
 _shared_model: Optional[SentenceTransformer] = None
+_model_lock = threading.Lock()
 
 def get_shared_model() -> SentenceTransformer:
     global _shared_model
     if _shared_model is None:
-        _shared_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        with _model_lock:
+            if _shared_model is None:
+                _shared_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
     return _shared_model
 
 class EmbeddingService:
