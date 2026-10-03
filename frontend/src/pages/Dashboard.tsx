@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Sidebar, type NavTab } from '../components/layout/Sidebar';
 import { TopBar } from '../components/layout/TopBar';
 import { AnalyzePage } from './AnalyzePage';
@@ -24,11 +24,40 @@ export const Dashboard: React.FC = () => {
   const [chunkCount, setChunkCount] = useState(0);
   const [runCount, setRunCount] = useState(0);
 
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const performHealthCheck = useCallback(function perform(attempt = 0) {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (attempt === 0) setApiStatus('checking');
+
+    debugApi.checkHealth()
+      .then(() => {
+        if (isMountedRef.current) setApiStatus('connected');
+      })
+      .catch(() => {
+        if (!isMountedRef.current) return;
+        const delays = [3000, 5000, 8000];
+        if (attempt < delays.length) {
+          timeoutRef.current = setTimeout(() => perform(attempt + 1), delays[attempt]);
+        } else {
+          setApiStatus('offline');
+        }
+      });
+  }, []);
+
   // Check backend health and fetch initial document list stats & run count
   useEffect(() => {
-    debugApi.checkHealth()
-      .then(() => setApiStatus('connected'))
-      .catch(() => setApiStatus('offline'));
+    performHealthCheck();
+
 
     documentsApi.getDocuments()
       .then((res) => {
@@ -43,7 +72,7 @@ export const Dashboard: React.FC = () => {
     historyApi.getRuns(1, 0)
       .then((res) => setRunCount(res.total || 0))
       .catch((err) => console.warn('Could not load run counts:', err));
-  }, []);
+  }, [performHealthCheck]);
 
   const handleRunDebug = async (query: string, topK: number, strategy: string = 'standard', threshold: number = 0.35) => {
     setIsLoading(true);
@@ -67,9 +96,7 @@ export const Dashboard: React.FC = () => {
   };
 
   const handleRefresh = () => {
-    debugApi.checkHealth()
-      .then(() => setApiStatus('connected'))
-      .catch(() => setApiStatus('offline'));
+    performHealthCheck(0);
   };
 
   return (

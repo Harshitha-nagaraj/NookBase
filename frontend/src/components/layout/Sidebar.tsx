@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Terminal, History, FileText, BarChart2, FlaskConical, ShieldCheck, AlertCircle, Activity, Cpu, X } from 'lucide-react';
+import { Terminal, History, FileText, BarChart2, FlaskConical, ShieldCheck, AlertCircle, Activity, X } from 'lucide-react';
+import logoImage from '../../assets/nookbase-logo.png';
 
 export type NavTab = 'analyze' | 'history' | 'documents' | 'evaluation' | 'experiments' | 'security';
 
@@ -68,17 +69,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div>
           {/* Top Header Logo Area */}
           <div className="h-13 px-4 border-b border-slate-200 flex items-center justify-between bg-white">
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-[5px] bg-[#00288e] flex items-center justify-center text-white font-bold shadow-sm">
-                <Cpu className="w-3.5 h-3.5" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xs tracking-tight text-slate-900 leading-none">NookBase</span>
-                <span className="text-[10px] text-slate-400 font-mono mt-0.5">Observability Workstation</span>
-              </div>
+            <div className="flex items-center pr-2">
+              <img src={logoImage} alt="NookBase Logo" className="h-7 w-auto object-contain" />
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 shrink-0">
               <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded border border-slate-200">
                 v1.0
               </span>
