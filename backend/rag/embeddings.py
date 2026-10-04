@@ -1,31 +1,33 @@
 import os
 import threading
 
-# Constrain PyTorch thread usage to prevent excessive memory and CPU overhead on Render Free Tier
+# Constrain ONNX Runtime threads to prevent excessive memory and CPU overhead on Render Free Tier
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 
 from typing import List, Optional
-from sentence_transformers import SentenceTransformer
-import torch
-
-torch.set_num_threads(1)
+from fastembed import TextEmbedding
 
 from backend.config import EMBEDDING_MODEL_NAME
 
-_shared_model: Optional[SentenceTransformer] = None
+_shared_model: Optional[TextEmbedding] = None
 _model_lock = threading.Lock()
 
-def get_shared_model() -> SentenceTransformer:
+def get_shared_model() -> TextEmbedding:
     global _shared_model
     if _shared_model is None:
         with _model_lock:
             if _shared_model is None:
-                _shared_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+                # fastembed uses 'sentence-transformers/all-MiniLM-L6-v2' instead of 'all-MiniLM-L6-v2' directly
+                model_name = EMBEDDING_MODEL_NAME
+                if model_name == "all-MiniLM-L6-v2":
+                    model_name = "sentence-transformers/all-MiniLM-L6-v2"
+                # Use threads=1 for low memory/CPU
+                _shared_model = TextEmbedding(model_name, threads=1)
     return _shared_model
 
 class EmbeddingService:
-    def __init__(self, model: Optional[SentenceTransformer] = None):
+    def __init__(self, model: Optional[TextEmbedding] = None):
         # Reuse shared model instance across services to avoid reloading heavy weights
         self.model = model or get_shared_model()
 
@@ -33,10 +35,10 @@ class EmbeddingService:
         """Embed a list of text chunks."""
         if not texts:
             return []
-        embeddings = self.model.encode(texts, convert_to_numpy=True)
-        return embeddings.tolist()
+        embeddings = list(self.model.embed(texts))
+        return [e.tolist() for e in embeddings]
 
     def embed_query(self, query: str) -> List[float]:
         """Embed a single query string."""
-        embedding = self.model.encode([query], convert_to_numpy=True)
-        return embedding[0].tolist()
+        embedding = list(self.model.embed([query]))[0]
+        return embedding.tolist()

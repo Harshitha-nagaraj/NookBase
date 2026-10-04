@@ -1,6 +1,6 @@
 fastapi
 pypdf
-sentence-transformers
+fastembed
 chromadb
 pytest
 uvicorn
