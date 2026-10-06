@@ -51,6 +51,11 @@ def setup_rag_for_evaluation():
     embedding_service = EmbeddingService()
     # Use a fresh collection for clean evaluation tests
     vector_store = VectorStore(collection_name="evaluation_collection")
+    try:
+        vector_store.client.delete_collection("evaluation_collection")
+        vector_store = VectorStore(collection_name="evaluation_collection")
+    except Exception:
+        pass
     
     all_chunks = []
     total_relevant_by_source = {}

@@ -1,4 +1,5 @@
 import numpy as np
+import re
 from typing import List, Dict, Any
 from backend.rag.embeddings import EmbeddingService
 from backend.rag.vector_store import VectorStore
@@ -28,24 +29,52 @@ class Retriever:
         and returns structured result breakdown.
         """
         query_embedding = self.embedding_service.embed_query(query)
-        raw_results = self.vector_store.search(query_embedding, top_k=top_k)
-
-        candidates_count = len(raw_results)
         
-        # Calculate similarity score = 1 / (1 + distance) and rank
+        # Retrieve a larger candidate set for better lexical recall
+        fetch_k = max(top_k, 10)
+        raw_results = self.vector_store.search(query_embedding, top_k=fetch_k)
+
+        # Basic query term extraction for lexical scoring
+        query_lower = query.lower()
+        query_words = set(re.findall(r'\b[a-z0-9_]+\b', query_lower))
+        stop_words = {"what", "is", "are", "the", "a", "an", "of", "in", "to", "for", "with", "on", "and", "or", "which", "how", "who", "where", "when", "why", "do", "does", "did", "can"}
+        key_terms = query_words - stop_words
+
         processed_candidates = []
         for i, res in enumerate(raw_results):
             dist = res.get("distance", 0.0)
             sim = 1.0 / (1.0 + dist)
             item = dict(res)
             item["original_rank"] = i + 1
-            item["rank"] = i + 1
             item["retrieval_score"] = round(sim, 4)
             item["similarity"] = round(sim, 4)
-            item["reranked_rank"] = i + 1
-            item["rerank_score"] = round(sim, 4)
             item["retained"] = True
+            
+            text_lower = item.get("text", "").lower()
+            lexical_score = 0.0
+            if key_terms:
+                term_matches = sum(1 for term in key_terms if term in text_lower)
+                lexical_score = term_matches / max(1, len(key_terms))
+                
+            # Lightweight semantic + lexical blend
+            # E.g. purely semantic vectors might retrieve "RAG Debugger architecture" for "What is RAG?"
+            # We boost chunks that have high query word overlap.
+            item["hybrid_score"] = sim + (lexical_score * 0.3)
             processed_candidates.append(item)
+
+        # Rerank based on hybrid score
+        processed_candidates.sort(key=lambda x: x["hybrid_score"], reverse=True)
+        
+        # Truncate back to top_k after ranking
+        processed_candidates = processed_candidates[:top_k]
+        
+        # Normalize fields for downstream
+        for i, item in enumerate(processed_candidates):
+            item["rank"] = i + 1
+            item["reranked_rank"] = i + 1
+            item["rerank_score"] = round(item["hybrid_score"], 4)
+            
+        candidates_count = len(processed_candidates)
 
         if strategy == "filtered":
             retained_results = []
@@ -58,7 +87,6 @@ class Retriever:
                     item["retained"] = False
                     removed_results.append(item)
             
-            # Update rank for retained results
             for idx, item in enumerate(retained_results):
                 item["rank"] = idx + 1
                 item["reranked_rank"] = idx + 1
@@ -74,48 +102,9 @@ class Retriever:
             }
 
         elif strategy == "reranked":
-            if not processed_candidates:
-                return {
-                    "candidates_count": 0,
-                    "retained_count": 0,
-                    "removed_count": 0,
-                    "retained_results": [],
-                    "all_candidates": [],
-                    "reranking_enabled": True,
-                    "reranking_results": []
-                }
-
-            # Embed candidate texts for fine-grained cosine similarity reranking
-            chunk_texts = [item["text"] for item in processed_candidates]
-            chunk_embeddings = self.embedding_service.embed_documents(chunk_texts)
-
-            q_vec = np.array(query_embedding, dtype=float)
-            q_norm = np.linalg.norm(q_vec)
-            if q_norm > 0:
-                q_vec = q_vec / q_norm
-
-            query_words = set(w.lower() for w in query.split() if len(w) > 2)
-
-            for idx, item in enumerate(processed_candidates):
-                c_vec = np.array(chunk_embeddings[idx], dtype=float)
-                c_norm = np.linalg.norm(c_vec)
-                cos_sim = float(np.dot(q_vec, c_vec / c_norm)) if c_norm > 0 else 0.0
-
-                # Compute keyword overlap score ratio
-                text_words = set(w.lower() for w in item["text"].split())
-                overlap = len(query_words.intersection(text_words)) / max(1, len(query_words)) if query_words else 0.0
-
-                # Blend score: 75% fine-grained cosine similarity + 25% keyword overlap ratio
-                rerank_score = round(float(0.75 * cos_sim + 0.25 * overlap), 4)
-                item["rerank_score"] = rerank_score
-
-            # Sort by rerank_score descending
-            sorted_candidates = sorted(processed_candidates, key=lambda x: x["rerank_score"], reverse=True)
-
+            # Just return the hybrid sorted list directly as reranked
             reranking_details = []
-            for new_idx, item in enumerate(sorted_candidates):
-                item["reranked_rank"] = new_idx + 1
-                item["rank"] = new_idx + 1
+            for item in processed_candidates:
                 reranking_details.append({
                     "original_rank": item["original_rank"],
                     "reranked_rank": item["reranked_rank"],
@@ -129,10 +118,10 @@ class Retriever:
 
             return {
                 "candidates_count": candidates_count,
-                "retained_count": len(sorted_candidates),
+                "retained_count": candidates_count,
                 "removed_count": 0,
-                "retained_results": sorted_candidates,
-                "all_candidates": sorted_candidates,
+                "retained_results": processed_candidates,
+                "all_candidates": processed_candidates,
                 "reranking_enabled": True,
                 "reranking_results": reranking_details
             }

@@ -115,6 +115,10 @@ class SecurityChunkAnalysisSchema(BaseModel):
     text_snippet: Optional[str] = None
 
 class SecurityResponse(BaseModel):
+    user_query_status: str = "SECURE"
+    user_query_risk: str = "NONE"
+    retrieved_context_status: str = "SECURE"
+    retrieved_context_risk: str = "NONE"
     risk_level: str = "NONE"
     finding_count: int = 0
     categories_detected: List[str] = []

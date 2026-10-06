@@ -377,3 +377,105 @@ class PromptInjectionDetector:
             "explanation": explanation,
             "chunk_details": chunk_details
         }
+
+    def analyze_user_query(self, query: str) -> Dict[str, Any]:
+        matched_patterns = []
+        findings = []
+        has_high = False
+        has_medium = False
+        has_low = False
+
+        for pdef in self.PATTERNS:
+            match = re.search(pdef.pattern, query, re.IGNORECASE)
+            if match:
+                matched_patterns.append(pdef.id)
+                finding = {
+                    "category": pdef.category,
+                    "severity": pdef.severity,
+                    "matched_text": match.group(0),
+                    "source": "user_query",
+                    "chunk_id": "query",
+                    "explanation": pdef.explanation
+                }
+                findings.append(finding)
+                if pdef.severity == "HIGH":
+                    has_high = True
+                elif pdef.severity == "MEDIUM":
+                    has_medium = True
+                elif pdef.severity == "LOW":
+                    has_low = True
+
+        if has_high:
+            risk_level = "HIGH"
+            status = "HIGH_RISK"
+            reason = "User query contains high-risk prompt injection attempt."
+        elif has_medium:
+            risk_level = "MEDIUM"
+            status = "SUSPICIOUS"
+            reason = "User query contains medium-risk prompt manipulation signals."
+        elif has_low:
+            risk_level = "LOW"
+            status = "LOW_RISK"
+            reason = "User query contains low-risk prompt keywords."
+        else:
+            risk_level = "NONE"
+            status = "SECURE"
+            reason = "User query is clean and safe."
+
+        return {
+            "risk_level": risk_level,
+            "status": status,
+            "matched_patterns": matched_patterns,
+            "findings": findings,
+            "reason": reason,
+            "is_prompt_injection": has_high or has_medium
+        }
+
+    def analyze_full_pipeline(self, query: str, chunks: List[Dict[str, Any]]) -> Dict[str, Any]:
+        query_res = self.analyze_user_query(query)
+        context_res = self.analyze_retrieved_chunks(chunks)
+
+        all_findings = query_res["findings"] + context_res["findings"]
+        all_categories = sorted(list(set([f["category"] for f in all_findings])))
+        all_matched = sorted(list(set(query_res.get("matched_patterns", []) + context_res.get("matched_patterns", []))))
+
+        if query_res["risk_level"] == "HIGH":
+            overall_status = "HIGH_RISK_QUERY"
+            overall_risk = "HIGH"
+            explanation = "User query contains direct prompt injection instructions."
+            recommendation = "Reject or sanitize malicious user input before pipeline processing."
+        elif context_res["risk_level"] == "HIGH":
+            overall_status = "UNTRUSTED_CONTEXT"
+            overall_risk = "HIGH"
+            explanation = f"User query is safe, but retrieved document context contains {context_res['affected_chunks']} chunk(s) with suspicious prompt instructions."
+            recommendation = "Treat retrieved document content as untrusted context data and enforce prompt instruction boundaries."
+        elif context_res["risk_level"] in ["MEDIUM", "LOW"]:
+            overall_status = "SUSPICIOUS_CONTEXT"
+            overall_risk = context_res["risk_level"]
+            explanation = "User query is safe, but retrieved context contains low/medium risk signals."
+            recommendation = context_res["recommendation"]
+        else:
+            overall_status = "SECURE"
+            overall_risk = "NONE"
+            explanation = "No prompt injection patterns detected in user query or retrieved context."
+            recommendation = "System context and user input are safe."
+
+        return {
+            "user_query_status": query_res["status"],
+            "user_query_risk": query_res["risk_level"],
+            "retrieved_context_status": context_res["status"],
+            "retrieved_context_risk": context_res["risk_level"],
+            "risk_level": overall_risk,
+            "status": overall_status,
+            "finding_count": len(all_findings),
+            "categories_detected": all_categories,
+            "findings": all_findings,
+            "retrieved_chunks_scanned": context_res["retrieved_chunks_scanned"],
+            "safe_chunks": context_res["safe_chunks"],
+            "affected_chunks": context_res["affected_chunks"],
+            "suspicious_chunks_count": context_res["affected_chunks"],
+            "matched_patterns": all_matched,
+            "recommendation": recommendation,
+            "explanation": explanation,
+            "chunk_details": context_res["chunk_details"]
+        }

@@ -147,6 +147,10 @@ def ensure_demo_data_ingested(vector_store, embedding_service):
 
 def map_security_report(security_report: dict) -> SecurityResponse:
     return SecurityResponse(
+        user_query_status=security_report.get("user_query_status", "SECURE"),
+        user_query_risk=security_report.get("user_query_risk", "NONE"),
+        retrieved_context_status=security_report.get("retrieved_context_status", "SECURE"),
+        retrieved_context_risk=security_report.get("retrieved_context_risk", "NONE"),
         risk_level=security_report.get("risk_level", "NONE"),
         finding_count=security_report.get("finding_count", 0),
         categories_detected=security_report.get("categories_detected", []),
@@ -231,8 +235,8 @@ async def debug_pipeline(req: DebugRequest):
         
         retrieval_report = comps["retrieval_diagnostics"].analyze(req.query, req.top_k, raw_results)
         
-        # Run Security Diagnostics on retrieved chunks
-        security_report = comps["security_detector"].analyze_retrieved_chunks(raw_results)
+        # Run Security Diagnostics on query & retrieved chunks
+        security_report = comps["security_detector"].analyze_full_pipeline(req.query, raw_results)
         
         t0_ctx = time.perf_counter()
         context_data = comps["context_builder"].build_context(req.query, raw_results)
@@ -578,7 +582,7 @@ async def debug_security(req: DebugRequest):
     comps = get_components()
     strategy_res = comps["retriever"].retrieve_with_strategy(req.query, top_k=req.top_k, strategy=req.strategy, threshold=req.threshold)
     raw_results = strategy_res["retained_results"]
-    security_report = comps["security_detector"].analyze_retrieved_chunks(raw_results)
+    security_report = comps["security_detector"].analyze_full_pipeline(req.query, raw_results)
     
     return map_security_report(security_report)
 

@@ -3,6 +3,39 @@ from backend.evaluation.metrics import EvaluationMetrics
 from backend.rag.embeddings import EmbeddingService
 from backend.evaluation.report import EvaluationResultItem, create_aggregated_report
 
+def test_precision_invariants():
+    metrics = EvaluationMetrics(None)
+    retrieved = [
+        {"chunk_id": f"chunk_{i}", "source": "docA"} for i in range(10)
+    ]
+    
+    for k in [1, 3, 5]:
+        p = metrics.precision_at_k(retrieved, "docA", k)
+        assert 0.0 <= p <= 1.0, f"Precision@{k} violated bound: {p}"
+        
+        # Test edge cases
+        assert 0.0 <= metrics.precision_at_k([], "docA", k) <= 1.0
+        assert 0.0 <= metrics.precision_at_k(retrieved, "", k) <= 1.0
+        assert 0.0 <= metrics.precision_at_k(retrieved, "docA", 0) <= 1.0
+
+def test_recall_invariants():
+    metrics = EvaluationMetrics(None)
+    # Retrieving 10 chunks from docA when only 2 total relevant chunks exist in corpus
+    retrieved = [
+        {"chunk_id": f"chunk_{i}", "source": "docA"} for i in range(10)
+    ]
+    
+    for k in [1, 3, 5]:
+        # Oversaturated case: retrieving more relevant chunks than total in corpus
+        r = metrics.recall_at_k(retrieved, "docA", total_relevant_chunks_in_corpus=2, k=k)
+        assert 0.0 <= r <= 1.0, f"Recall@{k} violated bound: {r}"
+        
+        # Test edge cases
+        assert 0.0 <= metrics.recall_at_k([], "docA", 2, k) <= 1.0
+        assert 0.0 <= metrics.recall_at_k(retrieved, "", 2, k) <= 1.0
+        assert 0.0 <= metrics.recall_at_k(retrieved, "docA", 0, k) <= 1.0
+        assert 0.0 <= metrics.recall_at_k(retrieved, "docA", 2, 0) <= 1.0
+
 def test_precision_at_k():
     metrics = EvaluationMetrics(None)
     
@@ -43,7 +76,7 @@ def test_recall_at_k():
     assert r3 == 0.25
     
     # Zero total relevant (edge case)
-    assert metrics.recall_at_k(retrieved, "docA", 0, 3) == 1.0
+    assert metrics.recall_at_k(retrieved, "docA", 0, 3) == 0.0
 
 def test_answer_relevance():
     metrics = EvaluationMetrics(EmbeddingService())

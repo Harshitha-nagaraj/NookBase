@@ -11,14 +11,15 @@ class EvaluationMetrics:
     def precision_at_k(self, retrieved_chunks: List[Dict[str, Any]], expected_source: Any, k: int) -> float:
         """
         Precision@K = (number of relevant retrieved chunks among top K) / K
+        Bounded mathematically between 0.0 and 1.0.
         """
         if k <= 0:
             return 0.0
         
-        sources = [expected_source] if isinstance(expected_source, str) else (expected_source or [])
-        sources = [s for s in sources if s]
+        sources = set([expected_source] if isinstance(expected_source, str) else (expected_source or []))
+        sources = {s for s in sources if s}
         
-        if not sources:
+        if not sources or not retrieved_chunks:
             return 0.0
 
         top_k = retrieved_chunks[:k]
@@ -35,20 +36,15 @@ class EvaluationMetrics:
 
     def recall_at_k(self, retrieved_chunks: List[Dict[str, Any]], expected_source: Any, total_relevant_chunks_in_corpus: int, k: int) -> float:
         """
-        Recall@K = (number of relevant retrieved chunks among top K) / (total number of relevant chunks)
+        Recall@K = (number of unique relevant items retrieved in top K) / (total number of relevant items)
+        Bounded mathematically between 0.0 and 1.0.
         """
-        sources = [expected_source] if isinstance(expected_source, str) else (expected_source or [])
-        sources = [s for s in sources if s]
+        sources = set([expected_source] if isinstance(expected_source, str) else (expected_source or []))
+        sources = {s for s in sources if s}
 
-        if not sources:
-            return 1.0
-
-        if total_relevant_chunks_in_corpus <= 0:
-            return 1.0
-            
-        if k <= 0:
+        if not sources or total_relevant_chunks_in_corpus <= 0 or k <= 0 or not retrieved_chunks:
             return 0.0
-            
+
         top_k = retrieved_chunks[:k]
         seen_ids = set()
         relevant_count = 0
@@ -59,7 +55,8 @@ class EvaluationMetrics:
                 if chunk.get("source") in sources:
                     relevant_count += 1
                     
-        return relevant_count / total_relevant_chunks_in_corpus
+        denom = max(total_relevant_chunks_in_corpus, relevant_count)
+        return relevant_count / denom
 
     def answer_relevance(self, generated_answer: str, expected_answer: str) -> Tuple[float, str]:
         """
