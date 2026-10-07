@@ -127,23 +127,53 @@ def get_components():
                 }
     return _components
 
+DEMO_FILES = [
+    "sample_document.txt",
+    "security_demo.txt",
+    "test_apollo.txt",
+    "quantum_test.txt",
+    "manual_test.txt.txt",
+]
+
 def ensure_demo_data_ingested(vector_store, embedding_service):
-    sec_file = os.path.join("./data", "security_demo.txt")
-    if os.path.exists(sec_file):
+    import logging
+    logger = logging.getLogger(__name__)
+
+    try:
+        results = vector_store.collection.get(include=["metadatas"])
+        metadatas = results.get("metadatas", []) or []
+        existing_sources = set(m.get("source") for m in metadatas if m and "source" in m)
+    except Exception as e:
+        logger.warning(f"Failed to query collection metadata: {e}")
+        existing_sources = set()
+
+    ingestor = None
+    chunker = None
+
+    for filename in DEMO_FILES:
+        if filename in existing_sources:
+            continue
+        
+        file_path = os.path.join("./data", filename)
+        if not os.path.exists(file_path):
+            logger.warning(f"Demo file not found at {file_path}, skipping.")
+            continue
+
         try:
-            results = vector_store.collection.get(include=["metadatas"])
-            metadatas = results.get("metadatas", []) or []
-            sources = [m.get("source") for m in metadatas if m and "source" in m]
-            if "security_demo.txt" not in sources:
+            if ingestor is None:
                 ingestor = DocumentIngestor()
                 chunker = TextChunker()
-                docs = ingestor.ingest(sec_file)
-                chunks = chunker.chunk_documents(docs)
+
+            docs = ingestor.ingest(file_path)
+            chunks = chunker.chunk_documents(docs)
+            if chunks:
                 texts = [c["text"] for c in chunks]
                 embeddings = embedding_service.embed_documents(texts)
                 vector_store.add_chunks(chunks, embeddings)
-        except Exception:
-            pass
+                existing_sources.add(filename)
+        except Exception as err:
+            logger.error(f"Failed to ingest demo file {filename}: {err}")
+
 
 def map_security_report(security_report: dict) -> SecurityResponse:
     return SecurityResponse(
