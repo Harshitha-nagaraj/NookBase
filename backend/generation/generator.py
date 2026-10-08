@@ -1,6 +1,6 @@
 import re
 from dataclasses import dataclass
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Set, Tuple
 
 @dataclass
 class GenerationResult:
@@ -18,6 +18,70 @@ class FallbackGenerator:
     def __init__(self):
         self.model_name = "fallback_mock_generator"
         self.generation_mode = "fallback"
+
+    def _normalize_query_concept(self, query: str) -> Tuple[str, List[str], Set[str]]:
+        """
+        Extract the target concept and its acronym/synonym aliases from query.
+        Returns (primary_concept, alias_variants, concept_words).
+        """
+        lower = query.lower().strip()
+        
+        # Static domain alias map
+        alias_map = {
+            "retrieval-augmented generation": ["retrieval-augmented generation", "retrieval augmented generation", "rag"],
+            "retrieval augmented generation": ["retrieval-augmented generation", "retrieval augmented generation", "rag"],
+            "rag": ["rag", "retrieval-augmented generation", "retrieval augmented generation"],
+            "prompt injection": ["prompt injection", "prompt-injection", "indirect prompt injection"],
+            "prompt-injection": ["prompt injection", "prompt-injection", "indirect prompt injection"],
+            "chromadb": ["chromadb", "chroma db", "chroma"],
+            "chroma db": ["chromadb", "chroma db", "chroma"],
+            "nookbase": ["nookbase", "nook base"],
+        }
+        
+        # Check static alias map
+        for key, aliases in alias_map.items():
+            if key in lower:
+                words = set(re.findall(r'\b[a-z0-9_-]+\b', key))
+                return key, aliases, words
+
+        # Extract concept after query prefix if definition query pattern matches
+        def_prefixes = [
+            r"^what\s+is\s+(an?\s+)?",
+            r"^what\s+are\s+",
+            r"^define\s+",
+            r"^explain\s+",
+            r"^what\s+does\s+",
+            r"^meaning\s+of\s+",
+            r"^definition\s+of\s+"
+        ]
+        
+        concept = ""
+        for p in def_prefixes:
+            m = re.search(p, lower)
+            if m:
+                concept = lower[m.end():].rstrip("?.! ")
+                concept = re.sub(r"\s+(mean|means|work|works)$", "", concept).strip()
+                break
+
+        if not concept:
+            concept = lower
+
+        aliases = [concept]
+        # Generate hypenated / unhyphenated variant
+        if "-" in concept:
+            aliases.append(concept.replace("-", " "))
+        elif " " in concept:
+            aliases.append(concept.replace(" ", "-"))
+
+        # Generate acronym if multi-word
+        words = concept.split()
+        if len(words) >= 2:
+            acronym = "".join(w[0] for w in words if w and w[0].isalnum()).lower()
+            if len(acronym) >= 2 and acronym not in aliases:
+                aliases.append(acronym)
+
+        concept_words = set(re.findall(r'\b[a-z0-9_-]+\b', concept))
+        return concept, aliases, concept_words
 
     def generate(self, query: str, context: str) -> GenerationResult:
         lower_query = query.lower().strip()
@@ -85,8 +149,10 @@ class FallbackGenerator:
                 "what pipeline details", "what steps", "what library", "what database"
             ]
             is_attr_query = any(lower_query.startswith(p) for p in attribute_patterns)
-            is_def_query = (lower_query.startswith("what is ") or lower_query.startswith("what are ")) and not is_attr_query
             
+            def_query_starts = ["what is ", "what are ", "define ", "explain ", "what does "]
+            is_def_query = (any(lower_query.startswith(p) for p in def_query_starts) or "meaning of" in lower_query or "definition of" in lower_query) and not is_attr_query
+
             q_type = "general"
             if is_attr_query:
                 q_type = "fact"
@@ -97,17 +163,25 @@ class FallbackGenerator:
             elif any(lower_query.startswith(w) for w in ["who", "where", "when"]) or any(k in lower_query for k in ["capital", "section", "recommendation", "metrics", "insights", "diagnostic", "evaluation"]):
                 q_type = "fact"
 
+            concept, aliases, concept_words = self._normalize_query_concept(lower_query)
+
             if key_terms or stems:
                 scored_sentences = []
                 test_case_pattern = r'\[(test case|example|attack)\s+\d+.*?\]'
                 imperative_command_pattern = r'^\s*(ignore|disregard|forget|delete|bypass|reveal|print|show|execute|output|send|transmit|act\s+as|you\s+are\s+now)\b'
 
-                for s in sentences:
+                for idx, s in enumerate(sentences):
                     s_lower = s.lower()
+                    defines_different_entity = False
                     
                     # Base score based on stemmed whole-word term overlap
                     term_matches = sum(1.0 for st in stems if re.search(rf'\b{re.escape(st)}', s_lower))
                     
+                    # Bonus term match if any alias of concept appears in sentence
+                    alias_present = any(re.search(rf'\b{re.escape(alias)}\b', s_lower) for alias in aliases)
+                    if alias_present:
+                        term_matches += 1.5
+
                     # Metric/diagnostic domain synonym mapping for observability queries
                     metric_synonyms = ["precision", "recall", "groundedness", "efficiency", "insights", "inspect", "vector similarities", "grounding failures", "observability"]
                     metric_match = False
@@ -140,9 +214,44 @@ class FallbackGenerator:
                             # Strict penalty if context doesn't define prompt injection
                             boost -= 5.0
                     elif is_def_query:
-                        def_markers = ["is a", "is an", "is the", "are", "refers to", "defined as", "means", "combines", "stands for", "consists of"]
-                        if any(p in s_lower for p in def_markers):
-                            boost += 1.5
+                        # Check definition evidence for target concept vs defining another proper noun entity
+                        # e.g., "NookBase is a tool for developers to inspect RAG pipelines." defines NookBase, not RAG!
+                        # e.g., "The RAG Debugger provides..." defines RAG Debugger, not RAG!
+                        def_verb_pattern = r'\b(is|are|combines|refers\s+to|means|is\s+a|is\s+an|allows|uses|retrieves|provides|helps|consists\s+of|stands\s+for|defined\s+as)\b'
+                        
+                        # Check if sentence defines a DIFFERENT entity Y (e.g. NookBase or RAG Debugger) when query asks about X (RAG)
+                        defines_different_entity = False
+                        subj_match = re.match(r'^\s*(the\s+|a\s+|an\s+)?([a-zA-Z0-9_-]+(?:\s+[a-zA-Z0-9_-]+){0,3})\s+(is|are|provides|acts|serves|combines|refers|means|uses|allows|helps)\b', s_lower)
+                        if subj_match:
+                            defined_subject = subj_match.group(2).strip()
+                            subj_norm = defined_subject.replace("-", " ")
+                            # Check if subject matches any alias of the queried concept
+                            alias_matches = False
+                            for alias in aliases:
+                                alias_norm = alias.replace("-", " ")
+                                if subj_norm == alias_norm or defined_subject == alias:
+                                    alias_matches = True
+                                    break
+                            if not alias_matches:
+                                defines_different_entity = True
+
+                        is_concept_def = False
+                        if not defines_different_entity:
+                            for alias in aliases:
+                                alias_pattern = rf'\b{re.escape(alias)}\b'
+                                if re.search(alias_pattern, s_lower):
+                                    if re.search(rf'{alias_pattern}\s+{def_verb_pattern}', s_lower) or \
+                                       re.search(rf'{def_verb_pattern}\s+.*{alias_pattern}', s_lower) or \
+                                       s_lower.startswith(alias):
+                                        is_concept_def = True
+                                        break
+
+                        if is_concept_def:
+                            boost += 6.0
+                        elif defines_different_entity:
+                            boost -= 10.0
+                        elif alias_present:
+                            boost += 1.0
                         else:
                             boost -= 2.5
                     elif q_type == "database":
@@ -154,7 +263,7 @@ class FallbackGenerator:
                             
                     # Subject term validation: if query contains proper nouns or rare subjects not present in sentence, enforce matching
                     subject_terms = [w for w in key_terms if w not in {"space", "center", "mission", "launched", "date", "year", "title", "role", "amount", "number", "first"}]
-                    if subject_terms:
+                    if subject_terms and not is_def_query:
                         subj_stems = [stem_word(w) for w in subject_terms]
                         subj_matches = sum(1.0 for st in subj_stems if re.search(rf'\b{re.escape(st)}', s_lower))
                         if subj_matches == 0:
@@ -162,21 +271,33 @@ class FallbackGenerator:
 
                     score = term_matches + boost
                     min_required = 2 if len(key_terms) >= 4 else 1
-                    valid_match = (term_matches >= min_required) or metric_match or rec_match
+                    valid_match = (term_matches >= min_required and not defines_different_entity) or metric_match or rec_match or (is_def_query and is_concept_def)
                     if score > 0 and valid_match:
-                        scored_sentences.append((score, s))
+                        scored_sentences.append((score, idx, s))
 
                 if scored_sentences:
                     max_score = max(item[0] for item in scored_sentences)
-                    # Keep top scoring sentences (score >= max_score - 0.1) to combine multi-document evidence
-                    top_sentences = []
-                    seen = set()
-                    for score, s in scored_sentences:
-                        if score >= max_score - 0.1 and s not in seen:
-                            seen.add(s)
-                            top_sentences.append(s)
-                    if top_sentences:
-                        answer = " ".join(top_sentences)
+                    # Filter top scoring sentences
+                    top_items = [item for item in scored_sentences if item[0] >= max_score - 0.1]
+                    
+                    # For definition queries, if top sentence is a definition, combine following elaboration sentences from same context block if present
+                    top_indices = set(item[1] for item in top_items)
+                    selected_indices = set(top_indices)
+
+                    if is_def_query:
+                        first_top_idx = min(top_indices)
+                        # Look ahead up to 2 adjacent sentences in context if they continue explaining concept
+                        for next_idx in range(first_top_idx + 1, min(first_top_idx + 3, len(sentences))):
+                            next_s_lower = sentences[next_idx].lower()
+                            # If next sentence uses elaboration pronouns or key domain terms (e.g. retrieved documents, external context, knowledge base)
+                            elaboration_markers = ["retrieved", "external context", "language model", "knowledge base", "this can", "it retrieves", "this helps", "this allows", "it uses", "it provides"]
+                            if any(marker in next_s_lower for marker in elaboration_markers) or next_s_lower.startswith("it ") or next_s_lower.startswith("this "):
+                                selected_indices.add(next_idx)
+
+                    # Order selected sentences by their original position in context
+                    ordered_sentences = [sentences[i] for i in sorted(selected_indices)]
+                    if ordered_sentences:
+                        answer = " ".join(ordered_sentences)
 
         return GenerationResult(
             answer=answer,
