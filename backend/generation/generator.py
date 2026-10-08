@@ -215,38 +215,28 @@ class FallbackGenerator:
                             boost -= 5.0
                     elif is_def_query:
                         # Check definition evidence for target concept vs defining another proper noun entity
-                        # e.g., "NookBase is a tool for developers to inspect RAG pipelines." defines NookBase, not RAG!
-                        # e.g., "The RAG Debugger provides..." defines RAG Debugger, not RAG!
+                        # e.g., "NookBase is a tool..." or "NookBase Security Test Documentation... NookBase provides..." defines NookBase, not RAG!
                         def_verb_pattern = r'\b(is|are|combines|refers\s+to|means|is\s+a|is\s+an|allows|uses|retrieves|provides|helps|consists\s+of|stands\s+for|defined\s+as)\b'
                         
-                        # Check if sentence defines a DIFFERENT entity Y (e.g. NookBase or RAG Debugger) when query asks about X (RAG)
                         defines_different_entity = False
-                        subj_match = re.match(r'^\s*(the\s+|a\s+|an\s+)?([a-zA-Z0-9_-]+(?:\s+[a-zA-Z0-9_-]+){0,3})\s+(is|are|provides|acts|serves|combines|refers|means|uses|allows|helps)\b', s_lower)
-                        if subj_match:
-                            defined_subject = subj_match.group(2).strip()
-                            subj_norm = defined_subject.replace("-", " ")
-                            # Check if subject matches any alias of the queried concept
-                            alias_matches = False
-                            for alias in aliases:
-                                alias_norm = alias.replace("-", " ")
-                                if subj_norm == alias_norm or defined_subject == alias:
-                                    alias_matches = True
-                                    break
-                            if not alias_matches:
-                                defines_different_entity = True
-
                         is_concept_def = False
-                        if not defines_different_entity:
-                            for alias in aliases:
-                                alias_pattern = rf'\b{re.escape(alias)}\b'
-                                if re.search(alias_pattern, s_lower):
-                                    if re.search(rf'{alias_pattern}\s+{def_verb_pattern}', s_lower) or \
-                                       re.search(rf'{def_verb_pattern}\s+.*{alias_pattern}', s_lower) or \
-                                       s_lower.startswith(alias):
-                                        is_concept_def = True
-                                        break
+                        
+                        system_nouns = {"debugger", "tool", "pipeline", "system", "app", "application", "platform", "framework", "service", "sdk", "suite", "documentation", "module"}
+                        
+                        v_match = re.search(def_verb_pattern, s_lower)
+                        if v_match:
+                            prefix_text = s_lower[:v_match.start()].strip()
+                            prefix_words = set(re.findall(r'\b[a-z0-9_-]+\b', prefix_text))
+                            prefix_has_alias = any(re.search(rf'\b{re.escape(alias)}\b', prefix_text) for alias in aliases)
+                            extra_system_nouns = (prefix_words & system_nouns) - concept_words
+                            
+                            if (prefix_text and not prefix_has_alias) or extra_system_nouns:
+                                # Verb is preceded by a subject that is NOT an alias of queried concept, or is a compound system noun
+                                defines_different_entity = True
+                            elif prefix_has_alias or any(s_lower.startswith(alias) for alias in aliases):
+                                is_concept_def = True
 
-                        if is_concept_def:
+                        if is_concept_def and not defines_different_entity:
                             boost += 6.0
                         elif defines_different_entity:
                             boost -= 10.0
