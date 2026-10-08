@@ -100,6 +100,10 @@ export interface EfficiencyResponse {
   context_reduction_percentage: number;
   efficiency_status: string;
   warnings: string[];
+  security_latency_ms?: number;
+  grounding_latency_ms?: number;
+  context_build_latency_ms?: number;
+  query_latency_ms?: number;
 }
 
 export interface SecurityFinding {

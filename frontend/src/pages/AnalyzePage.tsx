@@ -95,39 +95,51 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
   const traceSteps = [
     {
       name: 'QUERY',
-      status: 'OK',
-      latency: '0.8 ms',
+      status: data ? 'OK' : 'IDLE',
+      latency: data
+        ? (data.efficiency.query_latency_ms !== undefined && data.efficiency.query_latency_ms > 0
+            ? (data.efficiency.query_latency_ms < 0.1 ? '<0.1 ms' : `${data.efficiency.query_latency_ms.toFixed(1)} ms`)
+            : '<0.1 ms')
+        : 'N/A',
       meta: `${query.length} chars`,
     },
     {
       name: 'EMBEDDING',
-      status: 'OK',
-      latency: '12.4 ms',
-      meta: '384 dims',
+      status: data ? 'OK' : 'IDLE',
+      latency: 'N/A',
+      meta: data ? 'Incl. in RETRIEVAL' : '384 dims',
     },
     {
       name: 'RETRIEVAL',
       status: data ? (data.retrieval.results.length > 0 ? 'OK' : 'WARN') : 'IDLE',
-      latency: data ? `${data.efficiency.retrieval_latency_ms.toFixed(1)} ms` : '14.2 ms',
+      latency: data ? `${data.efficiency.retrieval_latency_ms.toFixed(1)} ms` : 'N/A',
       meta: data ? `${data.retrieval.strategy || strategy} (k=${data.retrieval.results.length})` : `k=${topK}`,
     },
     {
       name: 'CONTEXT',
       status: data ? 'OK' : 'IDLE',
-      latency: '2.1 ms',
-      meta: data ? `${data.efficiency.estimated_input_tokens} tokens` : '1864 chars',
+      latency: data
+        ? (data.efficiency.context_build_latency_ms !== undefined
+            ? (data.efficiency.context_build_latency_ms < 0.1 ? '<0.1 ms' : `${data.efficiency.context_build_latency_ms.toFixed(1)} ms`)
+            : '<0.1 ms')
+        : 'N/A',
+      meta: data ? `${data.efficiency.estimated_input_tokens} tokens` : '0 tok',
     },
     {
       name: 'SECURITY',
       status: data ? (hasSecurityFindings ? 'AFFECTED' : 'OK') : 'IDLE',
-      latency: '1.5 ms',
+      latency: data
+        ? (data.efficiency.security_latency_ms !== undefined
+            ? (data.efficiency.security_latency_ms < 0.1 ? '<0.1 ms' : `${data.efficiency.security_latency_ms.toFixed(1)} ms`)
+            : 'N/A')
+        : 'N/A',
       meta: data ? `${data.security?.affected_chunks ?? data.security?.suspicious_chunks_count ?? 0} flagged` : '0 flagged',
     },
     {
       name: 'GENERATION',
       status: data ? 'OK' : 'IDLE',
-      latency: data ? `${data.efficiency.generation_latency_ms.toFixed(1)} ms` : '18.5 ms',
-      meta: data ? `${data.efficiency.estimated_output_tokens} tokens` : '85 tok',
+      latency: data ? `${data.efficiency.generation_latency_ms.toFixed(1)} ms` : 'N/A',
+      meta: data ? `${data.efficiency.estimated_output_tokens} tokens` : '0 tok',
     },
     {
       name: 'GROUNDING',
@@ -136,7 +148,11 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
           ? 'OK'
           : data.grounding.status.toUpperCase().includes('PARTIAL') ? 'PARTIAL' : 'WARN'
         : 'IDLE',
-      latency: '5.2 ms',
+      latency: data
+        ? (data.efficiency.grounding_latency_ms !== undefined
+            ? `${data.efficiency.grounding_latency_ms.toFixed(1)} ms`
+            : 'N/A')
+        : 'N/A',
       meta: data
         ? `${(data.grounding.supported_claims_count ?? data.grounding.supported_claims.length) + (data.grounding.partially_supported_claims_count ?? 0)}/${
             data.grounding.total_claims ?? (data.grounding.supported_claims.length + data.grounding.unsupported_claims.length)
@@ -866,15 +882,23 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
             <div className="space-y-1.5 border-t border-slate-100 pt-2 text-[11px]">
               <div className="flex justify-between py-1 border-b border-slate-100">
                 <span className="text-slate-500">Retrieval Latency</span>
-                <span className="text-slate-900 font-semibold">{data ? `${data.efficiency.retrieval_latency_ms.toFixed(1)} ms` : '28.8 ms'}</span>
+                <span className="text-slate-900 font-semibold">{data ? `${data.efficiency.retrieval_latency_ms.toFixed(1)} ms` : 'N/A'}</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-slate-100">
+                <span className="text-slate-500">Security Latency</span>
+                <span className="text-slate-900 font-semibold">{data ? `${(data.efficiency.security_latency_ms ?? 0).toFixed(1)} ms` : 'N/A'}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-100">
                 <span className="text-slate-500">Generation Latency</span>
-                <span className="text-slate-900 font-semibold">{data ? `${data.efficiency.generation_latency_ms.toFixed(1)} ms` : '0.06 ms'}</span>
+                <span className="text-slate-900 font-semibold">{data ? `${data.efficiency.generation_latency_ms.toFixed(1)} ms` : 'N/A'}</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-slate-100">
+                <span className="text-slate-500">Grounding Latency</span>
+                <span className="text-slate-900 font-semibold">{data ? `${(data.efficiency.grounding_latency_ms ?? 0).toFixed(1)} ms` : 'N/A'}</span>
               </div>
               <div className="flex justify-between py-1 font-bold text-slate-900">
                 <span>Total Execution</span>
-                <span className="text-[#00288e]">{data ? `${data.efficiency.total_latency_ms.toFixed(1)} ms` : '102.1 ms'}</span>
+                <span className="text-[#00288e]">{data ? `${data.efficiency.total_latency_ms.toFixed(1)} ms` : 'N/A'}</span>
               </div>
             </div>
           </div>

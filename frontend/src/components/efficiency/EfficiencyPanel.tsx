@@ -34,7 +34,9 @@ export const EfficiencyPanel: React.FC<EfficiencyPanelProps> = ({ data }) => {
     { label: "Total tokens", value: efficiency.total_estimated_tokens, unit: "", bold: true },
     { label: "Retrieved chunks", value: retrieval.results.length, unit: "" },
     { label: "Retrieval latency", value: efficiency.retrieval_latency_ms.toFixed(1), unit: "ms" },
+    { label: "Security latency", value: (efficiency.security_latency_ms ?? 0).toFixed(1), unit: "ms" },
     { label: "Generation latency", value: efficiency.generation_latency_ms.toFixed(1), unit: "ms" },
+    { label: "Grounding latency", value: (efficiency.grounding_latency_ms ?? 0).toFixed(1), unit: "ms" },
     { label: "Total latency", value: efficiency.total_latency_ms.toFixed(1), unit: "ms", bold: true },
   ];
 

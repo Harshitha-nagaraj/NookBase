@@ -26,6 +26,8 @@ def test_efficiency_diagnostics():
     # 1. Latency measurements are non-negative.
     assert res.retrieval_latency_ms >= 0
     assert res.total_latency_ms >= 0
+    assert res.security_latency_ms >= 0
+    assert res.grounding_latency_ms >= 0
     
     # 2. Context character count is correct.
     assert res.context_characters == len(formatted_context)

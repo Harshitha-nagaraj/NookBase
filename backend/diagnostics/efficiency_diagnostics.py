@@ -8,19 +8,22 @@ class EfficiencyDiagnosticResult:
     context_build_latency_ms: float
     generation_latency_ms: float
     total_latency_ms: float
+    security_latency_ms: float = 0.0
+    grounding_latency_ms: float = 0.0
+    query_latency_ms: float = 0.0
     
-    retrieved_chunk_count: int
-    selected_chunk_count: int
-    context_characters: int
-    average_chunk_characters: float
-    largest_chunk_characters: int
+    retrieved_chunk_count: int = 0
+    selected_chunk_count: int = 0
+    context_characters: int = 0
+    average_chunk_characters: float = 0.0
+    largest_chunk_characters: int = 0
     
-    estimated_input_tokens: int
-    estimated_output_tokens: int
-    estimated_total_tokens: int
+    estimated_input_tokens: int = 0
+    estimated_output_tokens: int = 0
+    estimated_total_tokens: int = 0
     
-    context_reduction_percent: float
-    efficiency_status: str
+    context_reduction_percent: float = 0.0
+    efficiency_status: str = "GOOD"
     warnings: List[str] = field(default_factory=list)
 
 class EfficiencyDiagnosticsEngine:
@@ -40,7 +43,10 @@ class EfficiencyDiagnosticsEngine:
                 retrieved_chunks: List[Dict[str, Any]],
                 selected_chunks: List[Dict[str, Any]],
                 formatted_context: str,
-                generated_answer: str) -> EfficiencyDiagnosticResult:
+                generated_answer: str,
+                security_latency_ms: float = 0.0,
+                grounding_latency_ms: float = 0.0,
+                query_latency_ms: float = 0.0) -> EfficiencyDiagnosticResult:
         
         retrieved_count = len(retrieved_chunks)
         selected_count = len(selected_chunks)
@@ -85,6 +91,9 @@ class EfficiencyDiagnosticsEngine:
             context_build_latency_ms=context_build_latency_ms,
             generation_latency_ms=generation_latency_ms,
             total_latency_ms=total_latency_ms,
+            security_latency_ms=security_latency_ms,
+            grounding_latency_ms=grounding_latency_ms,
+            query_latency_ms=query_latency_ms,
             retrieved_chunk_count=retrieved_count,
             selected_chunk_count=selected_count,
             context_characters=context_characters,

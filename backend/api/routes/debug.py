@@ -247,7 +247,9 @@ def validate_debug_request(req: DebugRequest):
 
 @router.post("", response_model=DebugResponse)
 async def debug_pipeline(req: DebugRequest):
+    t0_query = time.perf_counter()
     validate_debug_request(req)
+    t1_query = time.perf_counter()
     import logging
     logger = logging.getLogger(__name__)
 
@@ -266,7 +268,9 @@ async def debug_pipeline(req: DebugRequest):
         retrieval_report = comps["retrieval_diagnostics"].analyze(req.query, req.top_k, raw_results)
         
         # Run Security Diagnostics on query & retrieved chunks
+        t0_sec = time.perf_counter()
         security_report = comps["security_detector"].analyze_full_pipeline(req.query, raw_results)
+        t1_sec = time.perf_counter()
         
         t0_ctx = time.perf_counter()
         context_data = comps["context_builder"].build_context(req.query, raw_results)
@@ -276,7 +280,10 @@ async def debug_pipeline(req: DebugRequest):
         gen_result = comps["generator"].generate(req.query, context_data["formatted_context"])
         t1_gen = time.perf_counter()
         
+        t0_grd = time.perf_counter()
         grounding_report = comps["grounding_diagnostics"].analyze(gen_result.answer, context_data["selected_chunks"])
+        t1_grd = time.perf_counter()
+
         t1_total = time.perf_counter()
         
         efficiency_report = comps["efficiency_diagnostics"].analyze(
@@ -288,7 +295,10 @@ async def debug_pipeline(req: DebugRequest):
             retrieved_chunks=raw_results,
             selected_chunks=context_data["selected_chunks"],
             formatted_context=context_data["formatted_context"],
-            generated_answer=gen_result.answer
+            generated_answer=gen_result.answer,
+            security_latency_ms=(t1_sec - t0_sec)*1000,
+            grounding_latency_ms=(t1_grd - t0_grd)*1000,
+            query_latency_ms=(t1_query - t0_query)*1000
         )
         
         mapped_results = map_retrieval_results(raw_results, retrieval_report)
@@ -339,7 +349,11 @@ async def debug_pipeline(req: DebugRequest):
             total_latency_ms=efficiency_report.total_latency_ms,
             context_reduction_percentage=efficiency_report.context_reduction_percent,
             efficiency_status=efficiency_report.efficiency_status,
-            warnings=efficiency_report.warnings
+            warnings=efficiency_report.warnings,
+            security_latency_ms=efficiency_report.security_latency_ms,
+            grounding_latency_ms=efficiency_report.grounding_latency_ms,
+            context_build_latency_ms=efficiency_report.context_build_latency_ms,
+            query_latency_ms=efficiency_report.query_latency_ms
         )
         
         security_res = map_security_report(security_report)
@@ -526,8 +540,11 @@ async def debug_grounding(req: DebugRequest):
 
 @router.post("/efficiency", response_model=EfficiencyResponse)
 async def debug_efficiency(req: DebugRequest):
+    t0_query = time.perf_counter()
     if not req.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
+    t1_query = time.perf_counter()
+
     comps = get_components()
     t0_total = time.perf_counter()
     t0_ret = time.perf_counter()
@@ -535,6 +552,10 @@ async def debug_efficiency(req: DebugRequest):
     raw_results = strategy_res["retained_results"]
     t1_ret = time.perf_counter()
     
+    t0_sec = time.perf_counter()
+    security_report = comps["security_detector"].analyze_full_pipeline(req.query, raw_results)
+    t1_sec = time.perf_counter()
+
     t0_ctx = time.perf_counter()
     context_data = comps["context_builder"].build_context(req.query, raw_results)
     t1_ctx = time.perf_counter()
@@ -543,6 +564,10 @@ async def debug_efficiency(req: DebugRequest):
     gen_result = comps["generator"].generate(req.query, context_data["formatted_context"])
     t1_gen = time.perf_counter()
     
+    t0_grd = time.perf_counter()
+    grounding_report = comps["grounding_diagnostics"].analyze(gen_result.answer, context_data["selected_chunks"])
+    t1_grd = time.perf_counter()
+
     t1_total = time.perf_counter()
     
     efficiency_report = comps["efficiency_diagnostics"].analyze(
@@ -554,7 +579,10 @@ async def debug_efficiency(req: DebugRequest):
         retrieved_chunks=raw_results,
         selected_chunks=context_data["selected_chunks"],
         formatted_context=context_data["formatted_context"],
-        generated_answer=gen_result.answer
+        generated_answer=gen_result.answer,
+        security_latency_ms=(t1_sec - t0_sec)*1000,
+        grounding_latency_ms=(t1_grd - t0_grd)*1000,
+        query_latency_ms=(t1_query - t0_query)*1000
     )
     
     return EfficiencyResponse(
@@ -566,7 +594,11 @@ async def debug_efficiency(req: DebugRequest):
         total_latency_ms=efficiency_report.total_latency_ms,
         context_reduction_percentage=efficiency_report.context_reduction_percent,
         efficiency_status=efficiency_report.efficiency_status,
-        warnings=efficiency_report.warnings
+        warnings=efficiency_report.warnings,
+        security_latency_ms=efficiency_report.security_latency_ms,
+        grounding_latency_ms=efficiency_report.grounding_latency_ms,
+        context_build_latency_ms=efficiency_report.context_build_latency_ms,
+        query_latency_ms=efficiency_report.query_latency_ms
     )
 
 @router.post("/compare", response_model=CompareResponse)

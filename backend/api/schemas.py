@@ -97,6 +97,10 @@ class EfficiencyResponse(BaseModel):
     context_reduction_percentage: float
     efficiency_status: str
     warnings: List[str]
+    security_latency_ms: float = 0.0
+    grounding_latency_ms: float = 0.0
+    context_build_latency_ms: float = 0.0
+    query_latency_ms: float = 0.0
 
 class SecurityFindingSchema(BaseModel):
     category: str
